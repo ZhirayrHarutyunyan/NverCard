@@ -1,0 +1,76 @@
+.card {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+
+    &-link {
+        display: block;
+        position: relative;
+
+        &__img {
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.16);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        &__step {
+            position: absolute;
+            width: 123px;
+            height: 19px;
+            font: rem(12px) $Regular;
+            color: var(--neutral_color_white);
+            text-align: center;
+            transform: rotate(-45deg);
+            top: 25px;
+            left: -25px;
+
+            @include sm {
+                top: 18px;
+                left: -35px;
+            }
+        }
+
+        &__info {
+            margin-top: 12px;
+
+            &--name {
+                font: rem(16px) $Bold;
+                margin-bottom: 16px;
+                color: var(--neutral_color_black);
+
+                @include md {
+                    margin-bottom: 10px;
+                }
+            }
+
+            &--price {
+                font: rem(16px) $Bold;
+                color: var(--neutral_color_black);
+
+            }
+        }
+    }
+
+    &-icon {
+
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        @include sm {
+            top: 0;
+        }
+
+    }
+
+
+    &-red {
+        background-color: var(--secondary_color_default-cd143f);
+    }
+
+    &-orange {
+        background-color: #F2994A;
+    }
+
+}

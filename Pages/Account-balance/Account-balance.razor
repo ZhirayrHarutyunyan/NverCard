@@ -1,0 +1,85 @@
+@page "/account-balance"
+@using NverCard.Public.Client.Shared.Account_Menu
+
+<Title Value="Հաշվեկշիռ"></Title>
+
+<section class="account">
+    <div class="container d-f d-block-sm">
+        <div class="account-menu">
+            <AccountMenu IsAccountBalance="true" />
+        </div>
+        <div class="balance animate_show_up">
+            <div class="balance-block">
+                <div class="account-block__title d-f">
+                    <h4 class="account-block__title--text account-block__title--active">
+                        Հաշվեկշիռ
+                    </h4>
+                </div>
+                <div class="balance-block__number d-f j-c-c a-i-c">@CurrentUser.Balance Դ</div>
+            </div>
+            <div class="account-block">
+                <h3 class="balance-block__title">Համալրման եղանակ</h3>
+                <div class="account-block__title d-f">
+                    <button class="account-block__title--text @(ReplenishmentType == ReplenishmentTypes.Electronic ? "active" : "")" @onclick="@(() => SelectReplenishment(ReplenishmentTypes.Electronic))">Էլեկտրոնային</button>
+                    <button class="account-block__title--text @(ReplenishmentType == ReplenishmentTypes.Universal ? "active" : "")" @onclick="@(() => SelectReplenishment(ReplenishmentTypes.Universal))">Ունիվերսալ քարտով</button>
+                </div>
+                @if (ReplenishmentType == ReplenishmentTypes.Electronic)
+                {
+                    <div class="balance-wallets">
+                        <div class="balance-wallets__block">
+                            <div class="balance-wallets__block--type d-f a-i-c">
+                                <div class="balance-wallets__block--type-img">
+                                    <img src="../assets/img/account/telcell.png" alt="telcell">
+                                </div>
+                                <div class="balance-wallets__block--type-number">989789797979789789789708</div>
+                                <button class="icon icon-copy balance-wallets__block--type-copy"></button>
+                            </div>
+                            <p class="balance-wallets__block--text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            </p>
+                        </div>
+                        <div class="balance-wallets__block">
+                            <div class="balance-wallets__block--type d-f a-i-c">
+                                <div class="balance-wallets__block--type-img">
+                                    <img src="../assets/img/account/telcell.png" alt="telcell">
+                                </div>
+                                <div class="balance-wallets__block--type-number">989789797979789789789708</div>
+                                <button class="icon icon-copy balance-wallets__block--type-copy"></button>
+                            </div>
+                            <p class="balance-wallets__block--text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            </p>
+                        </div>
+                        <div class="balance-wallets__block">
+                            <div class="balance-wallets__block--type d-f a-i-c">
+                                <div class="balance-wallets__block--type-img">
+                                    <img src="../assets/img/account/telcell.png" alt="telcell">
+                                </div>
+                                <div class="balance-wallets__block--type-number">989789797979789789789708</div>
+                                <button class="icon icon-copy balance-wallets__block--type-copy"></button>
+                            </div>
+                            <p class="balance-wallets__block--text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            </p>
+                        </div>
+                    </div>
+                }
+
+                @if (ReplenishmentType == ReplenishmentTypes.Universal)
+                {
+                    <div class="balance-wallets">
+                        <div class="balance-wallets__universal d-f f-d-c">
+                            <p class="balance-wallets__universal--text"></p>
+                            <input type="number" placeholder="_ _ _ _  _ _ _  _ _ _ "
+                                   class="balance-wallets__universal--input">
+                            <button class="btn btn-dark balance-wallets__universal--btn">Համալրել</button>
+                            <p class="balance-wallets__universal--text">
+                            </p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

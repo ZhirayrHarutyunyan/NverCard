@@ -1,0 +1,30 @@
+﻿  // popular
+  [product-slider] {
+
+      @include sm {
+          margin: 0 -16px;
+      }
+
+      .slick {
+          &-slide {
+              max-width: 232px;
+              min-width: 232px;
+              margin-right: 31px;
+
+              @include sm {
+                  margin-right: 15px;
+              }
+          }
+
+          &-arrow {
+              @include wh(43px);
+              top: -67px;
+              border-radius: var(--border-radius);
+          }
+
+          &-prev {
+              left: auto;
+              right: 51px;
+          }
+      }
+  }

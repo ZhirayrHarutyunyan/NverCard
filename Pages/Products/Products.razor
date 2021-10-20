@@ -1,0 +1,131 @@
+@page "/products/{SeoName}"
+@page "/products"
+
+@using NverCard.Public.Client.ServiceProxies.Queries.Products.Models
+@using System.Globalization;
+
+<Title Value="Բոլոր քարտերը"></Title>
+
+<!-- ==================== -EMPTY-BASKET/WISHLIST-END- ======+================== -->
+<section class="products">
+    <div class="container">
+        <div class="crumb d-f a-i-c">
+            <a href="#" class="crumb-logo d-f a-i-c j-c-c d-none-xs">
+                <img class="crumb-logo__img" src="../assets/img/favicon/logo-round-light.png">
+            </a>
+            <i class="crumb-arrow icon icon-arrow_right"></i>
+            <a class="crumb-page d-none-xs" href="/products">Բոլոր քարտերը</a>
+            @if (!string.IsNullOrEmpty(SeoName) && !string.IsNullOrWhiteSpace(SeoName))
+            {
+                <i class=" crumb-arrow d-none-xs icon icon-arrow_right"></i>
+                <p class="crumb-active d-none-xs">@CurrentSection</p>
+            }
+            <a class="crumb-page d-none d-block-xs" href="/">Գլխավոր</a>
+        </div>
+
+        <div class="products-block animate_show_up">
+            <div class="products-block__range d-f j-c-b a-i-c">
+                <p class="products-block__range--text d-none-xs">@(ProductsList != null ? ProductsList.Count : "") արդյունք @AllCount-ից</p>
+                @if (@SliderMinValue != null && @SliderMaxValue != null)
+                {
+                    <div class="filter">
+                        <div class="filter-range d-f a-i-c">
+                            <p class="filter-range__value filter-range__value--left">
+                                <span get-set-number-velue>@SliderMinValue</span>֏
+                            </p>
+                            <div class="filter-range__slider">
+
+                                <input class="filter-range__slider--item range-input" data-type-range
+                                       min="@SliderMinValue" max="@SliderMaxValue" step="500"
+                                       type="range" @onchange="OnSliderMinValueChange" value="@CurrentSliderMinValue" />
+                                <span class="filter-range__slider--circle filter-range__slider--circle-left" data-type-circle></span>
+
+                                <div class="filter-range__slider--line" data-type-line></div>
+
+                                <input class="filter-range__slider--item range-input" data-type-range
+                                       min="@SliderMinValue" max="@SliderMaxValue" step="500"
+                                       type="range" @onchange="OnSliderMaxValueChange" value="@CurrentSliderMaxValue" />
+                                <span class="filter-range__slider--circle filter-range__slider--circle-right" data-type-circle></span>
+                            </div>
+                            <p class="filter-range__value filter-range__value--right">
+                                <span get-set-number-velue>@SliderMaxValue</span>֏
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="products-block__list">
+                <div class="card-grid d-g g-t-c-5 g-g-32 ">
+                    @if (ProductsList.Count == 0 || ProductsList == null)
+                    {
+                        for (int i = 0; i < 20; i++)
+                        {
+                            <div class="lazy">
+                                <div class="lazy-loader">
+                                    <div class="lazy-loader__img animation_shadow_shake"></div>
+                                    <div class="lazy-loader__info">
+                                        <h3 class="lazy-loader__info--name animation_shadow_shake"></h3>
+                                        <p class="lazy-loader__info--price animation_shadow_shake"></p>
+                                    </div>
+                                </div>
+                                <i class="icon icon-heart lazy-icon disabled d-f a-i-c j-c-c"></i>
+                            </div>
+                        }
+                    }
+                    else if (ProductsList.Count == 0)
+                    {
+                        <p class="products-block__list--more-btn ">Նվեր քարտեր չեն գտնվել</p>
+                    }
+                    else
+                    {
+                        @foreach (ProductShortInfoModel product in ProductsList)
+                        {
+                            <div class="card">
+                                <a href="product/@product.ProductSeoLink" class="card-link">
+                                    <div class="card-link__img">
+                                        <img src="@product.ProductImage.ImageUrl" alt="card"
+                                             class="card-link__img--main">
+                                        @if (product.ProductTags.Any())
+                                        {
+                                            <span class="card-link__step card-orange">@product.ProductTags.FirstOrDefault().Name</span>
+                                        }
+                                    </div>
+                                    <div class="card-link__info">
+                                        <h3 class="card-link__info--name">@product.Name</h3>
+                                        <p class="card-link__info--price">
+                                            @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Min()) - 
+                                            @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Max())
+                                        </p>
+                                    </div>
+                                </a>
+                                <button class="icon icon-heart @(CheckFavoritStatus(product)) card-icon d-f a-i-c j-c-c" disabled="@FavoritButtonIsDisabled"
+                                        @onclick="(() => CreateOrRemoveFavorite(product))"></button>
+                            </div>
+                        }
+                    }
+
+                </div>
+                <div class="products-block__list--more d-f j-c-b a-i-c">
+                    @if (CurrentPage != PagesCount)
+                    {
+                        <button class="products-block__list--more-btn d-none-xs" @onclick="(() => ShowMore())">Տեսնել ավելին</button>
+                    }
+                    <!---pagination -->
+                    <div class="pagination d-f a-i-c">
+                        <button class="pagination-item pagination-arrow icon icon-arrow_left d-f a-i-c j-c-c @(CurrentPage == 1 ? "disabled" : "")" @onclick="(() => RedirectPage(CurrentPage - 1))"></button>
+
+                        @foreach (int page in Pages)
+                        {
+                            <button class="pagination-item pagination-link d-f a-i-c j-c-c @(CurrentPage == page ? "active" : "")" @onclick="(() => RedirectPage(page))">@(page.ToString())</button>
+                        }
+                        <button class="pagination-item pagination-arrow icon icon-arrow_right d-f a-i-c j-c-c @(CurrentPage == PagesCount ? "disabled" : "")" @onclick="(() => RedirectPage(CurrentPage + 1))"></button>
+                    </div>
+                    <!---pagination -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<Toast @ref="toast"></Toast>*@
+

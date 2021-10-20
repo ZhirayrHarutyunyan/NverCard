@@ -1,0 +1,46 @@
+.about {
+
+
+   &-block {
+      @include md {
+         flex-direction: column;
+      }
+
+      &__text {
+         @include md {
+            margin-top: 16px;
+         }
+
+         &--title {
+            font: rem(20px) $Bold;
+            color: var(--neutral_color_black);
+            margin-bottom: 16px;
+         }
+
+         &--info {
+            font: rem(16px) $Regular;
+            line-height: 27px;
+            color: var(--neutral_color_black);
+            margin-bottom: 20px;
+
+
+            @include xs {
+               line-height: 24px;
+            }
+         }
+
+         &--steps {
+            &-info {
+               font: rem(16px) $Regular;
+               line-height: 27px;
+               color: var(--neutral_color_black);
+            }
+         }
+      }
+
+      &__dropdown {
+         max-width: 230px;
+         width: 100%;
+      }
+   }
+}

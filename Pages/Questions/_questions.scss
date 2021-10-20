@@ -1,0 +1,43 @@
+.questions {
+   padding-top: 32px;
+   padding-bottom: 104px;
+
+   @include md {
+      padding-bottom: 32px;
+   }
+
+   &-block {
+      &__title {
+         font: rem(28px) $Bold;
+         color: var(--neutral_color_black);
+         margin-bottom: 56px;
+      }
+
+      &__list {
+         padding-bottom: 32px;
+         border-bottom: 1px solid var(--grey_color_default-D3D3D3);
+
+         &+& {
+            margin-top: 32px;
+         }
+
+         &--question {
+            width: 50%;
+            font: rem(20px) $Bold;
+            line-height: 34px;
+            color: var(--neutral_color_black);
+            padding-right: 20px;
+
+         }
+
+         &--answer {
+            width: 50%;
+            font: rem(20px) $Regular;
+            line-height: 30px;
+            color: var(--neutral_color_black);
+
+         }
+
+      }
+   }
+}

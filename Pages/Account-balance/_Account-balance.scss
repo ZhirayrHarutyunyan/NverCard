@@ -1,0 +1,82 @@
+.balance {
+   width: 100%;
+
+   &-block {
+
+      &__title {
+         font: rem(16px) $Bold;
+         color: var(--neutral_color_black);
+         margin-bottom: 16px;
+      }
+
+      &__number {
+         width: 100px;
+         padding: 8px 16px;
+         color: var(--primary_color_default-0DB02B);
+         background: var(--grey_color_light-F5F5F5);
+         border-radius: var(--border-radius);
+         margin-bottom: 32px;
+         font: rem(20px) $Bold;
+      }
+
+   }
+
+   &-wallets {
+      &__block {
+         margin-bottom: 24px;
+
+         &--type {
+            margin-bottom: 8px;
+
+            &-img {
+               width: 64px;
+               height: 24px;
+            }
+
+            &-number {
+               background: var(--grey_color_light-F5F5F5);
+               border: 1px solid rgba(35, 44, 49, 0.16);
+               border-radius: var(--border-radius);
+               padding: 10px 8px;
+               margin: 0 16px 0 24px;
+               font: rem(16px) $Regular;
+               color: var(--neutral_color_black);
+
+            }
+
+            &-copy {
+               color: var(--grey_color_default-999999);
+
+
+               &:hover {
+                  color: var(--primary_color_default-0DB02B);
+               }
+            }
+         }
+
+         &--text {
+            font: rem(13px) $Regular;
+            color: var(--neutral_color_black);
+         }
+      }
+
+      &__universal {
+         &--text {
+            font: rem(12px) $Regular;
+            color: var(--neutral_color_black);
+         }
+
+         &--input {
+            margin-top: 8px;
+            max-width: 249px;
+            width: 100%;
+         }
+
+         &--btn {
+            margin: 16px 0 8px;
+            max-width: 249px;
+            width: 100%;
+         }
+      }
+   }
+}

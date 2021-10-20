@@ -1,0 +1,75 @@
+@mixin wh($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+@mixin xs {
+    @media (max-width: 519.98px) {
+        @content;
+    }
+}
+
+@mixin sm {
+    @media (max-width: 767.98px) {
+        @content;
+    }
+}
+
+@mixin sm-min {
+    @media (min-width: 767.98px) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (max-width: 1023.98px) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (max-width: 1279.98px) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (max-width: 1439.98px) {
+        @content;
+    }
+}
+
+
+
+$margins: 100;
+$margin-size: 1px;
+
+@mixin margin-x {
+    $margin: null;
+
+    @for $i from 1 through $margins {
+
+        .mt-#{$i} {
+            margin-top: $margin-size * $i;
+        }
+
+        .mr-#{$i} {
+            margin-right: $margin-size * $i;
+        }
+
+        .mb-#{$i} {
+            margin-bottom: $margin-size * $i;
+        }
+
+        .ml-#{$i} {
+            margin-left: $margin-size * $i;
+        }
+
+        $margin: append($margin, unquote(".mr-#{$i}"), comma);
+        $margin: append($margin, unquote(".mt-#{$i}"), comma);
+        $margin: append($margin, unquote(".mb-#{$i}"), comma);
+        $margin: append($margin, unquote(".ml-#{$i}"), comma);
+    }
+}
+
+@include margin-x;

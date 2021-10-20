@@ -1,0 +1,142 @@
+@page "/basket"
+@using NverCard.Public.Client.ServiceProxies.Queries.ShoppingCarts.Models
+@using NverCard.Public.Client.ServiceProxies.Dictionaries
+
+<Title Value="Զամբյուղ"></Title>
+
+
+<!-- ==================== -EMPTY-BASKET -START- ======================== -->
+@*<section class="empty">
+    <div class="empty-block d-f j-c-c a-i-c f-d-c">
+    <div class="empty-block__img">
+    <img src="../assets/img/empty/empty_basket.png" alt="empty">
+    </div>
+    <h4 class="empty-block__title">Զամբյուղը դատարկ է</h4>
+    <div class="empty-block__button">
+    <a href="#" class="btn button btn-background empty-block__button--btn">Կատարել գնում</a>
+    </div>
+    </div>
+    </section>*@
+<!-- ==================== -EMPTY-BASKET -END- ======+================== -->
+
+<section class="basket animate_show_up">
+    <div class="container">
+        <div class="crumb d-f a-i-c">
+            <a href="#" class="crumb-logo d-f a-i-c j-c-c d-none-xs">
+                <img class="crumb-logo__img" src="../assets/img/favicon/logo-round-light.png">
+            </a>
+            <i class="crumb-arrow icon icon-arrow_right"></i>
+            <a class="crumb-page d-none-xs" href="/products">Բոլոր քարտերը</a>
+            <a class="crumb-page d-none d-block-xs" href="/">Գլխավոր</a>
+        </div>
+
+        <div class="basket-block d-f j-c-b">
+            <div class="basket-block__list">
+                <div class="basket-block__list--all d-f a-i-c">
+                    @*<label class="checked basket-block__list--all-checked d-f">
+                        <input id="asd" type="checkbox" checked="checked" class="checkbox">
+                        <span class="basket-block__list--item-checked__checkbox checked-checkbox"></span>
+                        </label>*@
+                    @if (ShopingCartItems != null)
+                    {
+                        <label for="asd" class="basket-block__list--all-text">
+                            Զամբյուղ
+                            (@(ShopingCartItems.Count))
+                        </label>
+                    }
+
+                </div>
+
+                @if (ShopingCartItems != null && ShopingCartItems.Count > 0)
+                {
+                    @foreach (ShoppingCartItemModel cartItem in ShopingCartItems)
+                    {
+                        <div class="basket-block__list--item d-f a-i-s j-c-b d-block-xs">
+                            <div class="basket-block__list--item-left d-f">
+                                @*<label class="checked basket-block__list--item-left__checked d-f a-i-c">
+                                    <input type="checkbox" class="checkbox">
+                                    <span class="checked-checkbox"></span>
+                                    </label>*@
+                                <a href="/product/@cartItem.ProductSeoLink" target="_blank"
+                            class="basket-block__list--item-left__img">
+                                    <img src="@cartItem.ImageUrl" alt="card">
+                                </a>
+                                <div class="basket-block__list--item-left__info">
+                                    <h4 class="basket-block__list--item-left__info--title line-clamp line-clamp_2">
+                                        @cartItem.ProductName
+                                    </h4>
+                                    <span class="basket-block__list--item-left__info--text">
+                                        @(cartItem.GiftcardType == GiftCardType.Electronic ? "Էլեկտրոնային" : "Պլաստիկ")
+                                    </span>
+                                    <p class="basket-block__list--item-left__info--price">
+                                        @GetCultureInfoAmountString(cartItem.Nominal, cartItem.NominalName)</p>
+                                </div>
+                            </div>
+                            <div class="basket-block__list--item-piece">
+                                <div class="increment d-f">
+                                    <button class="icon icon-remove d-f a-i-c j-c-c"
+                                @onclick="(() => DecreaseQuantity(cartItem))"></button>
+                                    <input id="quantity" type="number" class="increment-input border-0" autocomplete="off"
+                                value="@cartItem.Quantity" @oninput="((e) => QuantityChange(e, cartItem))">
+                                    <button class="icon icon-add d-f a-i-c j-c-c"
+                                @onclick="(() => IncreaseQuantity(cartItem))"></button>
+                                </div>
+                                <p class="basket-block__list--item-piece__price">
+                                    @GetCultureInfoPriceString(@GetShoppingCartItemTotalPrice(cartItem))</p>
+                            </div>
+                            <i class="icon icon-delete basket-block__list--item-delete d-f j-c-c"
+                        @onclick="(() => RemoveItemFromShoppingCart(cartItem))"></i>
+                        </div>
+                    }
+                }
+                else if (CartIsLoading)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        <div class="lazy">
+                            <div class="lazy-loader">
+                                <div class="lazy-loader__img animation_shadow_shake"></div>
+                                <div class="lazy-loader__info">
+                                    <h3 class="lazy-loader__info--name animation_shadow_shake"></h3>
+                                    <p class="lazy-loader__info--price animation_shadow_shake"></p>
+                                </div>
+                            </div>
+                            <i class="icon icon-heart lazy-icon disabled d-f a-i-c j-c-c"></i>
+                        </div>
+                    }
+
+                }
+                else
+                {
+                    <section class="empty">
+                        <div class="empty-block d-f j-c-c a-i-c f-d-c">
+                            <div class="empty-block__img">
+                                <img src="../assets/img/empty/empty_basket.png" alt="empty">
+                            </div>
+                            <h4 class="empty-block__title">Զամբյուղը դատարկ է</h4>
+                            <div class="empty-block__button">
+                                <a href="/products" class="btn button btn-background empty-block__button--btn">Կատարել գնում</a>
+                            </div>
+                        </div>
+                    </section>
+                }
+            </div>
+
+            @if (ShopingCartItems != null && ShopingCartItems.Count > 0)
+            {
+                <div class="basket-block__result d-f j-c-b f-d-c">
+                    <div class="basket-block__result--info d-f j-c-b">
+                        <p class="basket-block__result--info-text">Ընդհանուր (@(ShopingCartItems != null ?
+                        ShopingCartItems.Sum(i => i.Quantity) : 0))</p>
+                        <p class="basket-block__result--info-price">@GetCultureInfoPriceString(GetCartTotalPrice())</p>
+                    </div>
+                    <button class="btn btn-background basket-block__result--btn d-f a-i-c j-c-c"
+                    @onclick="LoginOrContinue">@(UserSession.IsSessionStarted ? "Շարունակել" : "Մուտք")</button>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+<Login @ref="modalLogin"></Login>

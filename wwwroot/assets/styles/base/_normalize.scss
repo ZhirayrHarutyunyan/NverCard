@@ -1,0 +1,170 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    outline: none;
+}
+
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+iframe,
+ol,
+ul,
+li,
+form,
+label,
+i,
+footer,
+header,
+menu,
+nav,
+a,
+table,
+thead,
+tbody,
+tfoot,
+tr,
+th,
+td,
+video,
+canvas,
+section,
+main object,
+address,
+code,
+em,
+small,
+strong,
+var,
+article,
+aside,
+details,
+figure,
+summary,
+time,
+mark,
+audio,
+center {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+}
+
+iframe,
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+main,
+picture {
+    display: block;
+}
+
+ol,
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th {
+    text-align: left;
+}
+
+input {
+    box-shadow: none;
+    -webkit-appearance: none;
+
+    &[type="password"] {
+        font: rem(17px) Verdana, sans-serif !important;
+    }
+
+    &[type="radio"],
+    &[type="checkbox"] {
+        display: none;
+    }
+
+    &[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        appearance: none;
+    }
+
+    &:-webkit-autofill {
+        transition: background-color 100000s ease-in-out 0s;
+    }
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+input,
+button,
+select,
+textarea {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+
+    &.contain {
+        object-fit: contain;
+    }
+}
+
+strong {
+    font-weight: bold;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}

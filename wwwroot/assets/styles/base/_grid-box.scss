@@ -1,0 +1,59 @@
+.d-g {
+   display: grid;
+}
+
+.g-t-c-2 {
+   grid-template-columns: 1fr 1fr;
+
+   @include sm {
+      grid-template-columns: 1fr;
+   }
+}
+
+.g-t-c-2-fix {
+   grid-template-columns: 1fr 1fr;
+}
+
+.g-t-c-3 {
+   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.g-t-c-4 {
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+
+   @include md {
+      grid-template-columns: 1fr 1fr;
+   }
+
+   @include sm {
+      grid-template-columns: 1fr;
+   }
+}
+
+.g-t-c-5 {
+   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+   @include lg {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+   }
+
+   @include md {
+      grid-template-columns: 1fr 1fr 1fr;
+   }
+
+   @include xs {
+      grid-template-columns: 1fr 1fr;
+   }
+}
+
+.g-g-32 {
+   grid-gap: 32px;
+
+   @include sm {
+      grid-gap: 16px;
+   }
+}
+
+.g-t-c-4-w {
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+}

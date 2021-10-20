@@ -1,0 +1,146 @@
+@import '../fonts/icons/icons';
+
+
+.icon-remove:before {
+  content: "\e91e";
+}
+
+.icon-add:before {
+  content: "\e91f";
+}
+
+.icon-account:before {
+  content: "\e900";
+}
+
+.icon-account-1:before {
+  content: "\e901";
+}
+
+.icon-arrow:before {
+  content: "\e902";
+}
+
+.icon-arrow_down:before {
+  content: "\e903";
+}
+
+.icon-arrow_right {
+  transform: rotate(-90deg);
+
+  &::before {
+    content: "\e903";
+  }
+}
+
+.icon-arrow_left {
+  transform: rotate(90deg);
+
+  &::before {
+    content: "\e903";
+  }
+}
+
+.icon-barcode:before {
+  content: "\e904";
+}
+
+.icon-category:before {
+  content: "\e905";
+}
+
+.icon-cc:before {
+  content: "\e906";
+}
+
+.icon-check:before {
+  content: "\e907";
+}
+
+.icon-clock:before {
+  content: "\e908";
+}
+
+.icon-close:before {
+  content: "\e909";
+}
+
+.icon-copy:before {
+  content: "\e90a";
+}
+
+.icon-delete:before {
+  content: "\e90b";
+}
+
+.icon-doc:before {
+  content: "\e90c";
+}
+
+.icon-error:before {
+  content: "\e90d";
+}
+
+.icon-facebook:before {
+  content: "\e90e";
+}
+
+.icon-heart:before {
+  content: "\e90f";
+}
+
+.icon-heart_outlined:before {
+  content: "\e910";
+}
+
+.icon-helper:before {
+  content: "\e911";
+}
+
+.icon-instagram:before {
+  content: "\e912";
+}
+
+.icon-login:before {
+  content: "\e913";
+}
+
+.icon-loop:before {
+  content: "\e914";
+}
+
+.icon-mail:before {
+  content: "\e915";
+}
+
+.icon-menu_burger:before {
+  content: "\e916";
+}
+
+.icon-phone:before {
+  content: "\e917";
+}
+
+.icon-search:before {
+  content: "\e918";
+}
+
+.icon-send:before {
+  content: "\e919";
+}
+
+.icon-shipping:before {
+  content: "\e91a";
+}
+
+.icon-shopping_cart_outlined:before {
+  content: "\e91b";
+}
+
+.icon-timelapse:before {
+  content: "\e91c";
+}
+
+.icon-to-use:before {
+  content: "\e91d";
+}

@@ -1,0 +1,91 @@
+@page "/account-cards"
+@using NverCard.Public.Client.Shared.Account_Menu
+@using NverCard.Public.Client.Modal.QrcodeModal
+
+<Title Value="Քարտեր"></Title>
+
+<section class="account">
+    <div class="container d-f d-block-sm">
+        <div class="account-menu">
+            <AccountMenu IsAccountCards="true" />
+        </div>
+        <div class="account-block animate_show_up">
+            <div class="account-block__title d-f">
+                <h4 class="account-block__title--text account-block__title--active">
+                    Նվեր քարտեր</h4>
+            </div>
+            <div class="order-cards">
+                <div class="d-g g-t-c-2-fix g-g-32">
+                    <div class="dropdown">
+                        <div class="dropdown-select dropdown-select__border click-expand d-f a-i-c j-c-b" window-click
+                            data-expand="false">
+                            <span class="dropdown-select__selected">@(OnlyActives ? ActiveTypeText : AllTypeText)</span>
+                            <i class="icon icon-arrow_down dropdown-select__arrow--black"></i>
+                        </div>
+                        <ul class="dropdown-list expand-block d-none">
+                            <li class="dropdown-list__item @(OnlyActives ? "active" : "")" @onclick="@(() => SelelectActiveCards(true))">Ակտիվ</li>
+                            <li class="dropdown-list__item @(OnlyActives ? "" : "active")" @onclick="@(()=> SelelectActiveCards(false))">Բոլոր</li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <div class="dropdown-select dropdown-select__border click-expand d-f a-i-c j-c-b" window-click
+                            data-expand="false">
+                            <span class="dropdown-select__selected">
+                                @GetMontsStringValue()
+                            </span>
+                            <i class="icon icon-arrow_down dropdown-select__arrow--black"></i>
+                        </div>
+                        <ul class="dropdown-list expand-block d-none">
+                            <li class="dropdown-list__item @(Months == 1 ? "active" : "")" @onclick="@(() => SelelectMonths(1))">Վերջին 1 ամիսը</li>
+                            <li class="dropdown-list__item @(Months == 6 ? "active" : "")" @onclick="@(() => SelelectMonths(6))">Վերջին 6 ամիսը</li>
+                            <li class="dropdown-list__item @(Months == 12 ? "active" : "")" @onclick="@(() => SelelectMonths(12))">Վերջին 12 ամիսը</li>
+                            <li class="dropdown-list__item @(Months == null ? "active" : "")" @onclick="@(() => SelelectMonths(null))">Բոլորը</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class=" order-cards__block card-grid d-g g-t-c-5 g-g-32">
+                    @if (GiftCertificates != null)
+                    {
+                        if (GiftCertificates.Count() > 0)
+                        {
+                            @foreach (var cert in GiftCertificates)
+                            {
+                                <div class="card">
+                                    <div class="card-link">
+                                        <a href="product/@cert.ProductSeoLink" class="card-link__img">
+                                            <img src="@cert.ImageUrl" alt="card" class="card-link__img--main">
+                                        </a>
+                                        <div class="order-cards__block--info">
+                                            <h6 class="order-cards__block--info-name">@cert.ProductName</h6>
+                                            <p class="order-cards__block--info-price">@cert.Nominal ֏</p>
+                                            <span class="order-cards__block--info-date">վավեր է @cert.ExpirationDate</span>
+                                            <div class="order-cards__block--info-files d-f">
+                                                <button href="javascript:;" target="_blank" @onclick="(() => DownloadPdf(cert.Id))"
+                                                        class="order-cards__block--info-files__btn order-cards__block--info-files__btn--pdf d-f j-c-c a-i-c">
+                                                    PDF
+                                                </button>
+                                                <button @onclick="(() => ShowBarcode(cert.Id))"
+                                                        class="order-cards__block--info-files__btn d-f j-c-c a-i-c icon icon-barcode">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h4 class="account-block__title--text account-block__title--active">
+                                Նվեր քարտեր չեն գտնվել
+                            </h4>
+                        }
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<QrcodeModal @ref="qrcodeModal"/>

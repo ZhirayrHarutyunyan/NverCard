@@ -1,0 +1,74 @@
+.lazy {
+   position: relative;
+   width: 100%;
+   min-height: 217px;
+
+   @include xs {
+      min-height: 169px;
+   }
+
+   &-loader {
+      height: 100%;
+
+      &__img {
+         max-width: 100%;
+         height: calc(100% - 72px);
+         box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.16);
+         border-radius: 8px;
+         background-color: var(--grey_color_dark-E6E6E6);
+
+         @include xs {
+            height: calc(100% - 60px);
+         }
+
+         &--product {
+            @include wh(100%);
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.16);
+            border-radius: 8px;
+            background-color: var(--grey_color_dark-E6E6E6);
+
+            @include xs {
+               height: 256px;
+            }
+         }
+      }
+
+      &__info {
+         margin-top: 12px;
+
+         &--name {
+            min-height: 22px;
+            margin-bottom: 16px;
+            background-color: var(--grey_color_dark-E6E6E6);
+
+            @include md {
+               margin-bottom: 10px;
+            }
+
+            @include xs {
+               min-height: 19px;
+            }
+         }
+
+         &--price {
+            width: calc(100% - 76px);
+            min-height: 22px;
+            background-color: var(--grey_color_dark-E6E6E6);
+
+            @include xs {
+               min-height: 19px;
+            }
+         }
+      }
+   }
+
+   &-icon {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      @include sm {
+         top: 0;
+      }
+   }
+}

@@ -1,0 +1,154 @@
+@import './shared',
+'./icons',
+'./normalize',
+'./flex-box',
+'./grid-box',
+'./root',
+'./loader';
+
+
+//  html
+
+html {
+    background-color: #FBFAFA;
+    font-size: rem(16px);
+
+    @include md {
+        font-size: rem(14px);
+    }
+}
+
+body {
+    padding-bottom: 320px;
+    position: relative;
+
+    @include lg {
+        padding-bottom: 405px;
+    }
+
+    @include md {
+        padding-bottom: 355px;
+    }
+
+    @include sm {
+        padding-bottom: 52px;
+    }
+}
+
+// container  -- START
+.container {
+    max-width: 1366px;
+    width: 100%;
+    padding: 0 40px;
+    margin: 0 auto;
+
+    @include md {
+        padding: 0 16px;
+    }
+}
+
+// container  -- END
+
+
+// cursor pointer -- START
+.cursor-pointer {
+    cursor: pointer;
+}
+
+// cursor pointer -- END
+
+
+
+// line-clamp -- START
+.line-clamp {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
+
+    /*! autoprefixer: off */
+
+    &_2 {
+        -webkit-line-clamp: 2;
+    }
+
+    &_3 {
+
+        -webkit-line-clamp: 3;
+    }
+}
+
+// line-clamp -- END
+
+
+
+
+// overflow-hidden -- START
+.overflow-hidden,
+.modal-overflow {
+    overflow: hidden;
+}
+
+// overflow-hidden -- END
+
+
+
+@import // modules
+'../modules/bread-crumb',
+'../modules/cards',
+'../modules/increment',
+'../modules/buttons',
+'../modules/empty',
+'../modules/checkbox-radiobtn',
+'../modules/input-textarea',
+'../modules/modal',
+'../modules/pagination',
+'../modules/dropdown-select',
+'../modules/slick-slider',
+'../modules/loop-icon',
+'../modules/product-slider',
+'../modules/new-arrivals-slider',
+'../modules/scrollbar',
+'../modules/range-slider',
+'../modules/account',
+'../modules/animtion',
+'../modules/lazy-loader',
+'../modules/heart',
+'../modules/d-none',
+'../modules/d-block',
+'../modules/theme',
+'../modules/no-support',
+
+// plugin styles
+'../modules/date-time-range-picker',
+
+
+
+// componetns
+'../../../../Shared/Header/Header',
+'../../../../Shared/Navbar/Navbar',
+'../../../../Shared/Footer/Footer',
+'../../../../Pages/Home/Home',
+'../../../../Pages/Favorites/Favorites',
+'../../../../Pages/About/About',
+'../../../../Pages/Products/Products',
+'../../../../Pages/Product/Product',
+'../../../../Pages/Basket/Basket',
+'../../../../Pages/Account-order/Account-order',
+'../../../../Pages/Account-cards/Account-cards',
+'../../../../Pages/Account-balance/Account-balance',
+'../../../../Pages/Checkout/Checkout',
+'../../../../Pages/Questions/Questions',
+'../../../../Pages/About/About',
+'../../../../Pages/Activation/Activation',
+
+
+
+
+
+
+
+// modal 
+'../../../../Modal/LoginModal/Login',
+'../../../../Modal/ToastModal/Toast';

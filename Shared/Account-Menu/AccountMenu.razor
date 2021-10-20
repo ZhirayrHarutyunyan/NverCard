@@ -1,0 +1,21 @@
+﻿
+<div class="account-menu__number">@UserName</div>
+<ul class="account-menu__pages d-block-sm-flex">
+    <li class="account-menu__pages--single">
+        <a class="account-menu__pages--single-link @(IsAccountCards ? "active" : "")" href="/account-cards">Քարտեր</a>
+    </li>
+    <li class="account-menu__pages--single">
+        <a class="account-menu__pages--single-link @(IsAccountBalance ? "active" : "")"
+           href="/account-balance">Հաշվեկշիռ</a>
+    </li>
+    <li class="account-menu__pages--single">
+        <a class="account-menu__pages--single-link @(IsAccountOrders ? "active" : "")" href="/account-order">
+            Իմ
+            պատվերները
+        </a>
+    </li>
+    <li class="account-menu__pages--single">
+        <span class="account-menu__pages--single-link cursor-pointer" @onclick="SignOut">Դուրս գալ</span>
+    </li>
+</ul>
+

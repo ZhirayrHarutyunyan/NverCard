@@ -1,0 +1,66 @@
+.order-cards {
+   &__dropdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 32px;
+
+      &--single {
+         &+& {
+            margin-left: 32px;
+
+            @include xs {
+               margin-left: 16px;
+            }
+         }
+      }
+   }
+
+   &__block {
+      margin-top: 24px;
+
+      &--info {
+         &-name {
+            margin-top: 8px;
+            font: rem(14px) $Regular;
+            color: var(--neutral_color_black);
+         }
+
+         &-price {
+            margin: 4px 0;
+            font: rem(16px) $Bold;
+            color: var(--neutral_color_black);
+         }
+
+         &-date {
+            font: rem(10px) $Regular;
+            color: var(--secondary_color_default-cd143f);
+            display: block;
+            text-align: right;
+         }
+
+         &-files {
+            margin-top: 8px;
+
+            &__btn {
+               width: 50%;
+               padding: 4px 23px;
+               border: 1px solid var(--grey_color_dark-E6E6E6);
+               box-sizing: border-box;
+               border-radius: var(--border-radius);
+               background-color: var(--neutral_color_white);
+               color: var(--primary_color_default-0DB02B);
+
+               &--pdf {
+                  font: rem(14px) $Regular;
+               }
+
+
+               &+& {
+                  margin-left: 7px;
+               }
+            }
+         }
+      }
+   }
+
+}

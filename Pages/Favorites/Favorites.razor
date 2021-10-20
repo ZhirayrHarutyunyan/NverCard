@@ -1,0 +1,82 @@
+@page "/favorites"
+<Title Value="Նախընտրածներ"></Title>
+
+<div class="product">
+    <div class="container">
+        <!-- crumb == start -->
+        <div class="crumb d-f a-i-c">
+            <a href="#" class="crumb-logo d-f a-i-c j-c-c d-none-xs">
+                <img class="crumb-logo__img" src="../assets/img/favicon/logo-round-light.png">
+            </a>
+            <i class="crumb-arrow icon icon-arrow_right d-none-xs"></i>
+            <a class="crumb-page d-none-xs" href="/products">Բոլոր քարտերը</a>
+            <i class="crumb-arrow icon icon-arrow_right d-none-xs"></i>
+            <p class="crumb-active d-none-xs">Նախընտրածներ</p>
+        </div>
+        <!-- crumb == end -->
+
+        <div class="favorites animate_show_up">
+            @if (FavoritProducts != null && FavoritProducts.Count > 0)
+            {
+                <div class="card-grid d-g g-t-c-5 g-g-32">
+                    @foreach (var product in FavoritProducts)
+                    {
+                        <div class="card">
+                            <a href="product/@product.ProductSeoLink" class="card-link">
+                                <div class="card-link__img">
+                                    <img src="@product.ProductImage.ImageUrl" alt="card" class="card-link__img--main">
+                                </div>
+                                <div class="card-link__info">
+                                    <h3 class="card-link__info--name">@product.Name</h3>
+                                    <p class="card-link__info--price">
+                                        @GetCultureInfoAmountString(product.Offers.Select(o => o.Nominal).Min()) -
+                                        @GetCultureInfoAmountString(product.Offers.Select(o => o.Nominal).Max())
+                                    </p>
+                                </div>
+                            </a>
+                            <button class="icon icon-heart @(CheckFavoritStatus(product)) card-icon d-f a-i-c j-c-c"
+                        @onclick="(() => CreateOrRemoveFavorite(product))"></button>
+                        </div>
+                    }
+                </div>
+            }
+            else if (PageIsLoadnig)
+            {
+                <div class="products-block__list animate_show_up">
+                    <div class="card-grid d-g g-t-c-5 g-g-32 ">
+                        @for (int i = 0; i < 20; i++)
+                        {
+                            <div class="lazy">
+                                <div class="lazy-loader">
+                                    <div class="lazy-loader__img animation_shadow_shake"></div>
+                                    <div class="lazy-loader__info">
+                                        <h3 class="lazy-loader__info--name animation_shadow_shake"></h3>
+                                        <p class="lazy-loader__info--price animation_shadow_shake"></p>
+                                    </div>
+                                </div>
+                                <i class="icon icon-heart lazy-icon disabled d-f a-i-c j-c-c"></i>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="animate_show_up">
+                    <section class="empty">
+                        <div class="empty-block d-f j-c-c a-i-c f-d-c">
+                            <div class="empty-block__img">
+                                <img src="../assets/img/empty/empty_wishlist.png" alt="empty">
+
+                            </div>
+                            <h4 class="empty-block__title">Նախընտրածներ չկան</h4>
+                            <div class="empty-block__button">
+                                <a href="#" class="btn button btn-background empty-block__button--btn">Կատարել գնում</a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            }
+        </div>
+    </div>
+</div>

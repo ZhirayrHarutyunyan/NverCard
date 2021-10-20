@@ -1,0 +1,31 @@
+.loader {
+   position: fixed;
+   top: 0;
+   left: 0;
+   @include wh(100%);
+   z-index: 9999999999999;
+}
+
+.loader:before {
+   content: '';
+   box-sizing: border-box;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   border-top: 2px solid var(--primary_color_default-0DB02B);
+   border-right: 2px solid transparent;
+   border-radius: 50%;
+   animation: loader-rotate .6s linear infinite;
+   @include wh(32px);
+   margin-top: -16px;
+   margin-left: -16px;
+   border-top-width: 3px;
+   border-right-width: 3px;
+   border-top-color: var(--primary_color_default-0DB02B);
+}
+
+@keyframes loader-rotate {
+   to {
+      transform: rotate(360deg)
+   }
+}

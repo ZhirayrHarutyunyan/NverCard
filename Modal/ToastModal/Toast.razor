@@ -1,0 +1,9 @@
+@*@inject IJSRuntime JSRuntime;*@
+
+@if (PopupToast)
+{
+    <div class="toast animate_show_up toast-@GetToastLevelStyle()">
+        <p class="toast-text">@Message</p>
+    </div>
+}
+

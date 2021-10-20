@@ -1,0 +1,9 @@
+.icon-loop {
+   animation: loader-rotate .8s linear infinite;
+}
+
+@keyframes loader-rotate {
+   to {
+      transform: rotate(360deg)
+   }
+}

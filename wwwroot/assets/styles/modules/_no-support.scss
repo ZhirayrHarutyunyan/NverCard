@@ -1,0 +1,19 @@
+.no-support {
+   &__browsers {
+      margin-top: 50px;
+
+      &-name {
+         width: 58px;
+         height: 51px;
+
+         @include xs {
+            width: 30px;
+            height: 30px;
+         }
+
+         &+& {
+            margin-left: 40px;
+         }
+      }
+   }
+}

@@ -1,0 +1,33 @@
+﻿
+
+@if (IsVisible)
+{
+    <div class="modal">
+        <div class="modal-backdrop" @onclick="Close"></div>
+        <div class="modal-dialog d-f a-i-c j-c-c animate_show_down">
+            <div class="login modal-content">
+                <i class="icon icon-close modal-close" @onclick="Close"></i>
+                <div class="login-modal">
+                    <div class="login-modal__content">
+                        @*<TelerikBarcode @ref="TelerikBarcodeRef"
+                                            Width="@Width"
+                                            Height="@Height"
+                                            Value="@Barcode">
+                            </TelerikBarcode>*@
+
+                        <img src="@QrcodeUrl" alt="card">
+
+                        @*<div id="barcode">@Barcode</div>
+                            <div id="barcode_text">@BarcodeText</div>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*@code {
+        Telerik.Blazor.Components.TelerikBarcode TelerikBarcodeRef { get; set; }
+
+    }*@

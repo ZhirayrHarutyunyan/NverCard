@@ -1,0 +1,131 @@
+﻿.slick {
+    &-carousel {
+        position: relative;
+    }
+
+    &-list {
+        overflow: hidden;
+    }
+
+    &-track {
+        display: flex;
+        flex-wrap: nowrap;
+        cursor: default;
+    }
+
+    &-vertical {
+        .slick-track {
+            display: block;
+        }
+    }
+}
+
+
+
+
+.slick {
+
+    //ARROWS
+    &-arrow {
+        position: absolute;
+        background-color: var(--grey_color_light-F5F5F5);
+        border: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // icon font
+        font-family: 'icomoon';
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        z-index: 9;
+
+        &:hover {
+            background-color: var(--grey_color_dark-E6E6E6);
+        }
+
+        &:before {
+            font-size: rem(24px);
+            color: var(--neutral_color_black);
+        }
+    }
+
+    &-prev {
+        left: 0;
+
+        &:before {
+            content: "\e903";
+            transform: rotate(90deg);
+        }
+    }
+
+    &-next {
+        right: 0;
+
+        &:before {
+            content: "\e903";
+            transform: rotate(-90deg);
+
+        }
+    }
+
+    &-disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0;
+    }
+
+    // DOTS
+    &-dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 24px;
+
+        li {
+            @include wh(8px);
+            margin: 5px;
+
+            button {
+                @include wh(100%);
+                background-color: var(--grey_color_default-999999);
+                border-radius: 50%;
+                font-size: 0;
+                color: transparent;
+                display: block;
+            }
+
+            &.slick-active {
+                @include wh(12px);
+
+                button {
+                    background-color: var(--secondary_color_dark-940019);
+                }
+            }
+        }
+
+        &-counter {
+            @include wh(63px, 40px);
+            font: rem(15px) $Regular;
+            color: var(--neutral_color_black);
+            position: absolute;
+            background-color: var(--grey_color_light-F5F5F5);
+            top: -52px;
+            right: 16px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & *:not(.slick-active) {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+.d-block {
+   display: block;
+
+   @include md {
+      &-md {
+         display: block;
+      }
+
+      &-md-flex {
+         display: flex;
+      }
+   }
+
+   @include sm {
+      &-sm {
+         display: block;
+      }
+
+      &-sm-flex {
+         display: flex;
+      }
+   }
+
+   @include xs {
+      &-xs {
+         display: block;
+      }
+
+      &-xs-flex {
+         display: flex;
+      }
+   }
+}

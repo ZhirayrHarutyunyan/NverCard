@@ -1,0 +1,132 @@
+.login {
+   max-width: 495px;
+   width: 100%;
+   padding: 24px;
+   background-color: var(--neutral_color_white);
+   border-radius: var(--border-radius);
+   position: relative;
+
+   @include xs {
+      padding: 32px 16px;
+   }
+
+   .modal-close {
+      top: 16px;
+      right: 16px;
+   }
+
+   &-modal {
+
+      &__title {
+         font: rem(20px) $Bold;
+         color: var(--neutral_color_black);
+         padding: 0 23px;
+         margin: 0 -25px 30px;
+         text-align: center;
+      }
+
+      &__content {
+
+         &--form {
+            &+& {
+               margin-top: 16px;
+            }
+
+            &-title {
+               font: rem(15px) $Regular;
+               color: var(--color_black);
+               margin-bottom: 8px;
+            }
+
+            &-box {
+               position: relative;
+
+               &__number {
+                  position: absolute;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  left: 16px;
+                  font: rem(16px) $Regular;
+                  color: var(--neutral_color_black);
+                  line-height: 27px;
+                  z-index: 1;
+
+                  &.disabled {
+                     opacity: .5;
+                     pointer-events: none;
+                  }
+               }
+
+               &__input {
+                  padding-left: 55px !important;
+               }
+
+               .validation {
+                  position: absolute;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  right: 16px;
+
+                  &.valid {
+                     color: var(--primary_color_default-0DB02B);
+
+                     &.disabled {
+                        opacity: .5;
+                        pointer-events: none;
+                     }
+                  }
+
+                  &.error {
+                     color: #EB5757;
+                  }
+               }
+            }
+
+            &-info {
+               font: rem(16px) $Regular;
+               color: #000000;
+               margin-top: 8px;
+               text-align: right;
+            }
+
+            &-repeat {
+
+               &:hover {
+                  color: var(--primary_color_default-0DB02B);
+               }
+            }
+
+            &-error {
+               font: rem(12px) $Regular;
+               color: #EB5757;
+               margin-top: 8px;
+            }
+
+            &-rules {
+               margin: 24px 0;
+
+               &__text {
+                  width: calc(100% - 18px);
+                  font: rem(16px) $Regular;
+                  color: #999999;
+                  padding-left: 8px;
+                  margin-top: -4px;
+
+                  @include xs {
+                     font-size: rem(14px);
+                     margin-top: -2px;
+                  }
+
+                  &--link {
+                     color: var(--neutral_color_black);
+
+                     &:hover {
+                        color: var(--primary_color_default-0DB02B);
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

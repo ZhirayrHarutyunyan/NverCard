@@ -1,0 +1,211 @@
+@page "/product/{ProductSeoLink}"
+@using NverCard.Public.Client.ServiceProxies.Queries.Products.Models
+@using NverCard.Public.Client.ServiceProxies.Dictionaries
+@using System.Globalization
+<Title Value="@ProductName"></Title>
+
+
+<section class="product">
+    <div class="container">
+        <div class="crumb d-f a-i-c">
+            <a href="#" class="crumb-logo d-f a-i-c j-c-c d-none-xs">
+                <img class="crumb-logo__img" src="../assets/img/favicon/logo-round-light.png">
+            </a>
+            <i class="crumb-arrow icon icon-arrow_right d-none-xs"></i>
+            <a class="crumb-page d-none-xs" href="/products">Բոլոր քարտերը</a>
+            <i class=" crumb-arrow icon icon-arrow_right"></i>
+            @foreach (var csgroup in CategoriesSeoLinks)
+            {
+                <a class="crumb-page d-none-xs" href="/products/@csgroup.SeoLink">@csgroup.CategoryName</a>
+            }
+            <i class="crumb-arrow icon icon-arrow_right d-none-xs"></i>
+            <p class="crumb-active d-none-xs">@ProductName</p>
+            @foreach (var csgroup in CategoriesSeoLinks)
+            {
+                <a class="crumb-page d-none d-block-xs" href="/products/@csgroup.SeoLink">@csgroup.CategoryName</a>
+            }
+        </div>
+        <div class="product-block animate_show_up">
+            <div class="product-block__card">
+                <div class="product-block__card--item d-f">
+                    <div class="product-block__card--item-img">
+                        @if (@ImageFileId != null)
+                        {
+                            <img src="@CurrentProductImageUrl" alt="card">
+                        }
+                        else
+                        {
+                            <div class="lazy-loader__img--product animation_shadow_shake"></div>
+                        }
+                    </div>
+                    <div class="product-block__card--item-name">
+                        <h4 class="product-block__card--item-name__title">@ProductName</h4>
+                        <div class="product-block__card--item-name__cost">
+                            <div class="product-block__card--item-name__cost--type d-f">
+                                <div class="product-block__card--item-name__cost--type-choosing">
+                                    <label class="checked d-f a-i-c">
+                                        <input type="radio" class="radio" name="cardType" checked="@GetCardType(GiftCardType.Electronic)" @onclick="(() => ChangeCardType(GiftCardType.Electronic))">
+                                        <span class="checked-radio"></span>
+                                        <p class="product-block__card--item-name__cost--type-choosing__text">Էլեկտրոնային</p>
+                                    </label>
+                                </div>
+                                @if (CurrentProduct != null && CurrentProduct.Offers.Any(o => o.GiftCardType == GiftCardType.Plastic))
+                                {
+                                    <div class="product-block__card--item-name__cost--type-choosing">
+                                        <label class="checked d-f a-i-c">
+                                            <input type="radio" class="radio" name="cardType" checked="@GetCardType(GiftCardType.Plastic)" @onclick="(() => ChangeCardType(GiftCardType.Plastic))">
+                                            <span class="checked-radio"></span>
+                                            <p class="product-block__card--item-name__cost--type-choosing__text">Պլաստիկ</p>
+                                        </label>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="product-block__card--item-name__cost--nominal d-f">
+                                <div class="product-block__card--item-name__cost--nominal-main">
+                                    <p class="product-block__card--item-name__cost--nominal-main__title">Նոմինալ</p>
+                                    <div class="product-block__card--item-name__cost--nominal-main__dropdown dropdown">
+                                        <div class="dropdown-select click-expand d-f a-i-c" window-click
+                                             data-expand="false">
+                                            <span class="product-block__card--item-name__cost--nominal-main__dropdown--select">
+                                                @GetCultureInfoAmountString(@SelectedOffer?.Nominal,
+                                                SelectedOffer?.NominalName)
+                                            </span>
+                                            <i class="icon icon-arrow_down"></i>
+                                        </div>
+                                        <ul class="dropdown-list expand-block d-none">
+                                            @foreach (var ofGroup in OffersNominals)
+                                            {
+                                                <li class="dropdown-list__item"
+                                                    @onclick="(() => SelectNominal(ofGroup.Nominal))">
+                                                    @GetCultureInfoAmountString(ofGroup.Nominal, ofGroup.NominalName)
+                                                </li>
+                                            }
+                                            <select hidden name="selectListName">
+                                                <option value="1">1</option>
+                                            </select>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-block__card--item-name__cost--nominal-main">
+                                    <p class="product-block__card--item-name__cost--nominal-main__title">Արժեք</p>
+                                    <span class="d-f a-i-c product-block__card--item-name__cost--nominal-main__result">
+                                        @SelectedPriceAmount ֏
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="increment d-f">
+                                <button class="icon icon-remove d-f a-i-c j-c-c" @onclick="DecreaseQuantity"></button>
+                                <input id="quantity" type="number" class="increment-input border-0" autocomplete="off"
+                                       value="@Quantity" @oninput="QuantityChange" />
+                                <button class="icon icon-add d-f a-i-c j-c-c" @onclick="IncreaseQuantity"></button>
+                            </div>
+                            <div class="product-block__card--item-name__cost--nominal-buttons d-f">
+                                <button class="btn button btn-background product-block__card--item-name__cost--nominal-buttons__now">
+                                    Գնել հիմա
+                                </button>
+                                <div class="d-f a-i-c">
+                                    <button class="btn btn-border product-block__card--item-name__cost--nominal-buttons__add"
+                                            @onclick="(() => AddItemToShoppingCart())">
+                                        Ավելացնել զամբյուղ
+                                    </button>
+                                    <button class="icon icon-heart @(CheckFavoritStatus()) d-f a-i-c j-c-c"
+                                            @onclick="@CreateOrRemoveFavorite"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-block__card--item-name__details">
+                            <div class="product-block__card--item-name__details--table">
+                                <div class="product-block__card--item-name__details--table-column d-f">
+                                    <div class="product-block__card--item-name__details--table-column__line d-f a-i-c">
+                                        <i class="icon icon-timelapse product-block__card--item-name__details--table-column__line--icon"></i>Օգտագործման
+                                        ժամկետ
+                                    </div>
+                                    <div class="product-block__card--item-name__details--table-column__info">
+                                        @GuaranteedValidityPeriod ամիս
+                                    </div>
+                                </div>
+                                <div class="product-block__card--item-name__details--table-column d-f">
+                                    <div class="product-block__card--item-name__details--table-column__line d-f a-i-c">
+                                        <i class="icon icon-to-use product-block__card--item-name__details--table-column__line--icon"></i>Որտեղ
+                                        օգտագործել
+                                    </div>
+                                    <div class="product-block__card--item-name__details--table-column__info">
+                                        @((MarkupString)ShortDescription)
+                                    </div>
+                                </div>
+                                <div class="product-block__card--item-name__details--table-column d-f">
+                                    <div class="product-block__card--item-name__details--table-column__line d-f a-i-c">
+                                        <i class="icon icon-doc product-block__card--item-name__details--table-column__line--icon"></i>Փաստաթուղթ
+                                    </div>
+                                    <div class="product-block__card--item-name__details--table-column__info">
+                                        <a href="#" class="product-block__card--item-name__details--table-column__link">
+                                            Փաստաթուղթի
+                                            անուն
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-block__card--info d-f j-c-b">
+                    <div class="product-block__card--info-details product-block__card--info__left">
+                        <h4 class="product-block__card--info-details__title">Նկարագրություն</h4>
+                        <p class="product-block__card--info-details__text">
+                            @((MarkupString)Description)
+                        </p>
+                    </div>
+                    <div class="product-block__card--info-details">
+                        <h4 class="product-block__card--info-details__title">Ինչպե՞ս օգտվել</h4>
+                        <p class="product-block__card--info-details__text">
+                            @((MarkupString)DescriptionOfTermsOfUse)
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (InterestedProductsView.Count() > 0)
+        {
+            <div class="top-sales__block section-block">
+                <div class="top-sales__block-list section-block__list">
+                    <h2 class="section-block__list--title">Ձեզ կհետաքրքրի նաև․․․</h2>
+
+                    <div class="slick-carousel" product-slider>
+
+                        @foreach (var product in InterestedProductsView)
+                        {
+                            <div>
+                                <div class="section-block__list--slide card">
+                                    <a href="/product/@product.ProductSeoLink" class="card-link">
+                                        <div class="card-link__img">
+                                            @if (product?.ProductImage?.FileId != null)
+                                            {
+                                                <img src="@product.ProductImage.ImageUrl" alt="card" class="card-link__img--main">
+                                            }
+                                            else
+                                            {
+                                                <div class="lazy-loader__img--product animation_shadow_shake"></div>
+                                            }
+                                        </div>
+                                        <div class="card-link__info">
+                                            <h3 class="card-link__info--name">@product.Name</h3>
+                                            <p class="card-link__info--price">
+                                                @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Min()) -
+                                                @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Max())
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <button class="icon icon-heart card-icon @(CheckFavoritStatus(product)) d-f a-i-c j-c-c"
+                                            @onclick="(() => CreateOrRemoveFavorite(product))"></button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

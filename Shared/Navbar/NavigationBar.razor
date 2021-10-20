@@ -1,0 +1,265 @@
+@using NverCard.Public.Client.ServiceProxies.Queries.ProductCategories.Models
+@using NverCard.Public.Client.ServiceProxies.Queries.ProductTags.Models
+@using System.Globalization
+@using NverCard.Public.Client.Pages.Products
+@using NverCard.Public.Client.Modal.LoginModal
+@using NverCard.Public.Client.Modal.ToastModal
+@using NverCard.Public.Client.ServiceProxies.Queries.ShoppingCarts.Models
+@using NverCard.Public.Client.ServiceProxies.Dictionaries
+@implements IDisposable
+
+
+@inject UserSession userSession;
+
+<div class="navbar" navbar-onscroll-sticky>
+    <div class="container d-f a-i-c j-c-b">
+        <div class="navbar-main d-f a-i-c">
+            <a href="/" class="navbar-main__logo d-none" navbar-onscroll-sticky-logo>
+                <img src="../assets/img/logo/logo-round-green.svg" alt="logo">
+            </a>
+            <button class="navbar-main__btn d-f a-i-c j-c-c d-none-sm" click-catalog-open-close window-click>
+                <i class="icon icon-menu_burger navbar-main__btn--icon d-none d-block-sm"></i>
+                <span class="navbar-main__btn--name">Բաժիններ</span>
+                <i class="icon icon-arrow_down navbar-main__btn--icon d-none-sm"></i>
+            </button>
+        </div>
+
+        <form action="#" class="navbar-search header-content__search d-none" navbar-onscroll-sticky-search>
+            <input type="text" class="header-content__search--area" placeholder="Նվեր քարտ" serach-focus-toggle>
+            <button class="header-content__search--btn icon icon-search"></button>
+            <div class="header-content__search--result d-none" serach-focus-result style="display: none;">
+                <div class="header-content__search--result-list">
+                    <a href="javascript:;" class="header-content__search--result-list__link">Նվեր քարտ</a>
+                    <a href="javascript:;" class="header-content__search--result-list__link">Կոշիկ</a>
+                </div>
+                <div class="header-content__search--result-static">
+                    <h2 class="header-content__search--result-static__title">Top gift cards</h2>
+                    <div class="header-content__search--result-static__box">
+                        <ul class="header-content__search--result-static__box--list d-f f-w">
+                            <li class="header-content__search--result-static__box--list-item">
+                                <a href="javascript:;"
+                                    class="header-content__search--result-static__box--list-item__link">Waikiki</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h2 class="header-content__search--result-static__title">Lavaguyn vacharq</h2>
+                    <div class="header-content__search--result-static__box">
+                        <ul class="header-content__search--result-static__box--list d-f f-w">
+                            <li class="header-content__search--result-static__box--list-item">
+                                <a href="javascript:;"
+                                    class="header-content__search--result-static__box--list-item__link">Waikiki</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="navbar-info d-f a-i-c">
+            <div class="navbar-info__user d-f j-c-b">
+                <span class="navbar-info__user--login d-none d-block-sm-flex a-i-c j-c-c" click-catalog-open-close
+                    window-click>
+                    <i class="navbar-info__user--login-icon icon icon-menu_burger d-f a-i-c j-c-c"></i>
+                    <span class="navbar-info__user--login-text">Բաժիններ</span>
+                </span>
+                @if (!userSession.IsSessionStarted)
+                {
+                    <a href="javascript:;" class="navbar-info__user--login d-f a-i-c"
+                    @onclick="(() => {modalLogin.openModalLogin();})">
+                        <i class="navbar-info__user--login-icon icon icon-account-1 d-f a-i-c j-c-c"></i>
+                        <span class="navbar-info__user--login-text">Մուտք</span>
+                    </a>
+                }
+                else
+                {
+                    <div class="navbar-info__user--account d-f a-i-c- j-c-c">
+                        <div class="navbar-info__user--account-balance d-f a-i-c d-none-md">
+                            <span class="navbar-info__user--account-balance__text">Բալանս</span>
+                            <span class="navbar-info__user--account-balance__count">
+                                @((CurrentUser.Balance ?? 0).ToString("N0",
+                            CultureInfo.CreateSpecificCulture("en-us"))) ֏
+                            </span>
+                        </div>
+                        <a href="/account-cards" class="navbar-info__user--account-icon icon icon-account d-f a-i-c j-c-c">
+                            <span class="navbar-info__user--login-text d-none d-block-sm">Հաշիվ</span>
+                        </a>
+                    </div>
+                }
+
+                <a href="/favorites"
+                    class="navbar-info__shopping--icon icon icon-heart_outlined d-none d-block-sm-flex a-i-c j-c-c">
+                    <span class="navbar-info__shopping--icon-count d-f a-i-c j-c-c">@CustomerFavoriteCount</span>
+                    <span class="navbar-info__user--login-text d-none d-block-sm">Ընտրված</span>
+                </a>
+                <a href="/basket"
+                    class="navbar-info__shopping--icon icon icon-shopping_cart_outlined d-none d-block-sm-flex a-i-c j-c-c">
+                    <span class="navbar-info__shopping--icon-count d-f a-i-c j-c-c">@ShoppingCartItemsCount</span>
+                    <span class="navbar-info__user--login-text d-none d-block-sm">Զամբյուղ</span>
+                </a>
+            </div>
+            <div class="navbar-info__shopping d-f a-i-c d-none-sm">
+                <a href="/favorites" class="navbar-info__shopping--icon icon icon-heart_outlined d-f a-i-c j-c-c">
+                    <span class="navbar-info__shopping--icon-count d-f a-i-c j-c-c">@CustomerFavoriteCount</span>
+                </a>
+                <div class="navbar-info__shopping--icon d-f a-i-c j-c-c">
+                    <a href="/basket" class="icon icon-shopping_cart_outlined">
+                        <span class="navbar-info__shopping--icon-count d-f a-i-c j-c-c">@ShoppingCartItemsCount</span>
+                    </a>
+                    @if (ShowBasketDropDown())
+                    {
+                        <div class="navbar-info__shopping--icon-dropdown  d-none-sm">
+                            <div class="navbar-info__shopping--icon-dropdown__box scrollbar">
+                                @if (ShoppingCart != null)
+                                    @foreach (ShoppingCartItemModel cartItem in ShoppingCart.CartItems)
+                                    {
+                                        <div class="navbar-info__shopping--icon-dropdown__list d-f">
+                                            <a href="/product/@cartItem.ProductSeoLink"
+                                    class="navbar-info__shopping--icon-dropdown__list--img">
+                                                <img src="@cartItem.ImageUrl" alt="product">
+                                            </a>
+                                            <div class="navbar-info__shopping--icon-dropdown__list--info">
+                                                <a href="/product/@cartItem.ProductSeoLink"
+                                        class="navbar-info__shopping--icon-dropdown__list--info-name">
+                                                    @cartItem.ProductName
+                                                </a>
+                                                <span class="navbar-info__shopping--icon-dropdown__list--info-electronic">
+                                                    @(cartItem.GiftcardType == GiftCardType.Electronic ? "Էլեկտրոնային" : "Պլաստիկ")
+                                                </span>
+                                                <div class="navbar-info__shopping--icon-dropdown__list--info-price d-f a-i-e j-c-b">
+                                                    <p class="navbar-info__shopping--icon-dropdown__list--info-price__nominal">
+                                                        @GetCultureInfoAmountString(cartItem.Nominal, cartItem.NominalName)
+                                                        @(cartItem.Quantity > 1 ? $"x {cartItem.Quantity}" : "")
+                                                    </p>
+                                                    <p class="navbar-info__shopping--icon-dropdown__list--info-price__main">
+                                                        @GetCultureInfoAmountString(cartItem.Price * cartItem.Quantity, "֏")
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <i class="icon icon-delete navbar-info__shopping--icon-dropdown__list--delete d-f a-i-c j-c-c"
+                                    @onclick="(() => RemoveItemFromShoppingCart(cartItem))"></i>
+                                        </div>
+                                    }
+
+                            </div>
+                            <div class="navbar-info__shopping--icon-dropdown__info">
+                                <div class="navbar-info__shopping--icon-dropdown__info--count d-f a-i-c j-c-b">
+                                    <p class="navbar-info__shopping--icon-dropdown__info--count-general">Ընդհանուր
+                                        (@(ShoppingCart != null ? ShoppingCart.CartItems.Sum(i => i.Quantity) : 0))</p>
+                                    <p class="navbar-info__shopping--icon-dropdown__info--count-price">@ShoppingCartAmount
+                                    </p>
+                                </div>
+                                <a href="/basket" class="btn btn-background d-f a-i-c j-c-c">Զամբյուղ</a>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar-catalog d-none d-block-sm" navbar-catalog-toggle>
+        <div class="navbar-catalog__head d-none d-block-sm-flex a-i-c j-c-b">
+            <a href="/" class="navbar-catalog__head--logo" navbar-catalog-toggle-logo>
+                <img src="../assets/img/logo/logo-round-light.svg" alt="logo">
+            </a>
+            <span class="navbar-catalog__head--name" select-name-catalog>Բաժիններ</span>
+            <i class="icon icon-close navbar-catalog__head--icon d-f a-i-c j-c-c"></i>
+        </div>
+        <div class="container navbar-catalog__container">
+            <ul class="navbar-catalog__list">
+                @foreach (ProductCategoryModel category in ProductCategoriesList)
+                {
+                    @if (category.SeoLink != "universal")
+                    {
+                        <li class="navbar-catalog__list--item" catalog-item>
+                            <a href="products/@category.SeoLink" class="navbar-catalog__list--item-link  d-f f-w-n a-i-c j-c-b"
+                        click-catalog-name change-active-catalog>
+                                <span class="navbar-catalog__list--item-link__name" get-name-catalog>@category.Name</span>
+                            </a>
+                            <ul class="navbar-catalog__list--item-sub d-none-sm" catalog-sub-menu>
+                                <li class="navbar-catalog__list--item-sub__categories scrollbar d-f j-c-b">
+                                    <div class="navbar-catalog__list--item-sub__categories--slider d-f f-d-c j-c-b">
+                                        <div class="navbar-catalog__list--item-sub__categories--slider-list">
+                                            <div
+                                        class="navbar-catalog__list--item-sub__categories--slider-list__item d-g g-t-c-2 g-g-32">
+                                                @if (category.CategoryProducts != null)
+                                                {
+                                                    @foreach (var product in category.CategoryProducts.Take(4))
+                                                    {
+                                                        <a href="/product/@product.ProductSeoLink"
+                                            class="navbar-catalog__list--item-sub__categories--slider-list__item--img">
+                                                            <img src="@product.ProductImage.ImageUrl" alt="img" />
+                                                        </a>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <a href="/products/@category.SeoLink"
+                                    class="navbar-catalog__list--item-sub__categories--slider-all d-i-f a-i-c">
+                                            <span class="navbar-catalog__list--item-sub__categories--slider-all__name">
+                                                Տեսնել բոլորը
+                                            </span>
+                                            <i
+                                        class="icon icon-arrow navbar-catalog__list--item-sub__categories--slider-all__icon"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                }
+
+                @foreach (ProductTagModel productTag in ProductTags)
+                {
+                    <li class="navbar-catalog__list--item" catalog-item>
+                        <a href="products/@productTag.SeoLink"
+                        class="navbar-catalog__list--item-link  d-f f-w-n a-i-c j-c-b" click-catalog-name
+                        change-active-catalog>
+                            <span class="navbar-catalog__list--item-link__name" get-name-catalog>#@productTag.Name</span>
+                        </a>
+                        <ul class="navbar-catalog__list--item-sub d-none-sm" catalog-sub-menu>
+                            <li class="navbar-catalog__list--item-sub__categories scrollbar d-f j-c-b">
+                                <div class="navbar-catalog__list--item-sub__categories--slider d-f f-d-c j-c-b">
+                                    <div class="navbar-catalog__list--item-sub__categories--slider-list">
+                                        <div
+                                        class="navbar-catalog__list--item-sub__categories--slider-list__item d-g g-t-c-2 g-g-32">
+                                            @if (productTag.TagProducts != null)
+                                            {
+                                                @foreach (var product in productTag.TagProducts)
+                                                {
+                                                    <a href="/product/@product.ProductSeoLink"
+                                            class="navbar-catalog__list--item-sub__categories--slider-list__item--img">
+                                                        <img src="@product.ProductImage.ImageUrl" alt="img" />
+                                                    </a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <a href="/products/@productTag.SeoLink"
+                                    class="navbar-catalog__list--item-sub__categories--slider-all d-i-f a-i-c">
+                                        <span class="navbar-catalog__list--item-sub__categories--slider-all__name">
+                                            Տեսնել բոլորը
+                                        </span>
+                                        <i
+                                        class="icon icon-arrow navbar-catalog__list--item-sub__categories--slider-all__icon"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                <li class="navbar-catalog__list--item">
+                    <a href="product/nvercard-universal" class="navbar-catalog__list--item-all d-f a-i-c">
+                        ՈՒնիվերսալ
+                        նվեր քարտ
+                    </a>
+                </li>
+                <li class="navbar-catalog__list--item">
+                    <a href="products/" class="navbar-catalog__list--item-all d-f a-i-c">Տեսնել բոլորը</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<Login @ref="modalLogin" LoadData="@UserInfoRebind"></Login>

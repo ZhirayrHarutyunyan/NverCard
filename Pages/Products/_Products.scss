@@ -1,0 +1,52 @@
+.products {
+   padding: 24px 0 68px;
+
+   @include lg {
+      padding: 24px 0 35px;
+   }
+
+   @include sm {
+      padding: 16px 0 32px;
+   }
+
+   &-block {
+
+      &__range {
+         margin-bottom: 44px;
+
+         @include xs {
+            margin-bottom: 24px;
+
+         }
+
+         &--text {
+            font: rem(12px) $Regular;
+            color: var(--neutral_color_black);
+
+         }
+      }
+
+      &__list {
+         &--more {
+            width: 50%;
+            margin-top: 55px;
+            margin-left: auto;
+
+            @include md {
+               width: 100%;
+            }
+
+            @include xs {
+               margin: 25px auto;
+               justify-content: center;
+            }
+
+            &-btn {
+               font: rem(16px) $Regular;
+               color: var(--neutral_color_black);
+            }
+         }
+      }
+   }
+
+}

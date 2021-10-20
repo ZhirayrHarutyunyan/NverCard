@@ -1,0 +1,89 @@
+﻿// animation -- = show_up START
+.animate_show_up {
+    animation: animate_show_up .8s;
+}
+
+@keyframes animate_show_up {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// animation -- = show_up END
+
+
+// animation -- = show_down START
+.animate_show_down {
+    animation: animate_show_down .8s;
+}
+
+@keyframes animate_show_down {
+    0% {
+        transform: translateY(-30px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+// animation -- = show_down END
+
+// animation -- = show_fadeIn START
+.animate_show_fadeIn {
+    animation: animate_show_fadeIn .8s;
+}
+
+@keyframes animate_show_fadeIn {
+    0% {
+        // opacity: 0;
+        transform: scale(.9);
+    }
+
+    100% {
+        // opacity: 1;
+        transform: scale(1);
+    }
+}
+
+// animation -- = show_fadeIn END
+
+
+
+
+// animation -- = shadow shake START
+
+.animation_shadow_shake {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 3em;
+        height: 100%;
+        top: 0;
+        transform: skewX(-45deg) translateX(0);
+        background: rgba(#F5F5F5, .3);
+        animation: animation_shadow_shake 1s infinite;
+
+    }
+}
+
+@keyframes animation_shadow_shake {
+    0% {
+        left: -35%;
+    }
+
+    100% {
+        left: 130%;
+    }
+}
+
+// animation -- = shadow shake END

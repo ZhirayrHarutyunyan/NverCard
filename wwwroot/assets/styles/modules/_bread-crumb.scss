@@ -1,0 +1,56 @@
+.crumb {
+    margin: 0 0 41px;
+
+    @include md {
+        margin: 0 0 33px;
+    }
+
+    @include xs {
+        margin: 0 0 18px;
+    }
+
+
+    &-logo {
+        width: 40px;
+        height: 40px;
+        margin-right: 12px;
+
+        @include sm {
+            margin-right: 12px;
+        }
+    }
+
+    &-arrow {
+        color: var(--neutral_color_black);
+
+        @include xs {
+            transform: rotate(90deg);
+        }
+    }
+
+    &-page {
+        font: rem(16px) $Regular;
+        color: var(--neutral_color_black);
+        margin: 0 12px;
+
+        &:hover {
+            color: #999999;
+        }
+
+        @include sm {
+            margin: 12px;
+        }
+    }
+
+    &-active {
+        color: #999999;
+        font: rem(16px) $Regular;
+        margin-left: 12px;
+
+        @include sm {
+            margin-left: 12px;
+        }
+
+    }
+
+}

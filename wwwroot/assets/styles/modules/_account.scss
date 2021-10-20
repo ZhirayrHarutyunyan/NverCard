@@ -1,0 +1,111 @@
+.account {
+   padding: 40px 0;
+
+   @include xs {
+      padding: 20px 0;
+   }
+
+   &-menu {
+      max-width: 298px;
+      width: 100%;
+      margin-right: 32px;
+
+      @include md {
+         max-width: 152px;
+      }
+
+      @include sm {
+         max-width: 100%;
+      }
+
+
+      &__number {
+         font: rem(16px) $Bold;
+         padding: 0 0 10px 10px;
+         border-bottom: 2px solid var(--primary_color_dark-007F00);
+         color: var(--neutral_color_black);
+         margin-bottom: 20px;
+
+         @include sm {
+            margin-bottom: 10px;
+         }
+      }
+
+      &__pages {
+         @include sm {
+            margin-bottom: 23px;
+            align-items: center;
+         }
+
+         &--single {
+            padding-left: 10px;
+
+            @include sm {
+               padding: 0 8px 0 0;
+            }
+
+            &+& {
+               margin-top: 16px;
+
+               @include sm {
+                  margin-top: 0;
+               }
+            }
+
+            &-link {
+               font: rem(16px) $Regular;
+               color: var(--neutral_color_black);
+
+               &:hover,
+               &.active {
+                  color: var(--primary_color_default-0DB02B);
+
+                  @include sm {
+                     background: var(--grey_color_light-F5F5F5);
+                     padding: 5px;
+                  }
+               }
+            }
+
+         }
+      }
+   }
+
+   &-block {
+      width: 100%;
+
+      &__title {
+         border-bottom: 2px solid rgba(35, 44, 49, 0.16);
+         margin-bottom: 25px;
+
+         @include sm {
+            border: none;
+         }
+
+         &--text {
+            font: rem(16px) $Regular;
+            padding: 16px 10px;
+
+            &.active {
+               font: rem(16px) $Bold;
+               color: var(--neutral_color_black);
+               position: relative;
+
+               &::after {
+                  position: absolute;
+                  content: "";
+                  width: 100%;
+                  height: 2px;
+                  background-color: var(--primary_color_dark-007F00);
+                  bottom: -2px;
+                  left: 0;
+
+                  @include sm {
+                     display: none;
+                  }
+               }
+            }
+         }
+      }
+   }
+}

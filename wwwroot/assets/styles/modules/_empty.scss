@@ -1,0 +1,71 @@
+.empty {
+   padding: 70px 15px 100px;
+   background-color: var(--neutral_color_white);
+
+   @include sm {
+      padding: 70px 15px;
+   }
+
+   &-block {
+      &__title {
+         margin-top: 40px;
+         font: rem(30px) $Bold;
+         color: var(--neutral_color_black);
+         text-align: center;
+
+         @include sm {
+            margin-top: 30px;
+         }
+      }
+
+      &__text {
+         margin-top: 16px;
+         max-width: 630px;
+         font: rem(16px) $Regular;
+         line-height: 22px;
+         color: var(--neutral_color_black);
+         text-align: center;
+      }
+
+      &__button {
+         margin-top: 50px;
+
+         @include sm {
+            margin-top: 30px;
+         }
+
+         @include xs {
+            flex-direction: column;
+         }
+
+         &--btn {
+            width: 158px;
+         }
+
+         &--found {
+            width: 191px;
+
+            &+& {
+               margin-left: 16px;
+
+               @include xs {
+                  margin: 16px 0 0;
+               }
+            }
+         }
+
+         &--thanks {
+            width: 262px;
+
+            &+& {
+               margin-left: 16px;
+
+               @include xs {
+                  margin: 16px 0 0;
+               }
+            }
+         }
+
+      }
+   }
+}

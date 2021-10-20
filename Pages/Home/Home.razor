@@ -1,0 +1,325 @@
+@page "/"
+
+<Title Value="Գլխավոր"></Title>
+
+<main>
+    <!-- ===================== -HTML5-BANNER-START- ======================= -->
+    <section class="banner">
+        <div class="container d-f j-c-b d-block-sm">
+            <div class="banner-block">
+                <p class="banner-block__description d-f a-i-c">Առաջինը հայկական շուկայում</p>
+                <h1 class="banner-block__title">Ընտրեք նվերներ՝ խնայելով Ձեր ժամանակը</h1>
+                <p class="banner-block__text">
+                    Nvercard-ը օնլայն տարբերակով ձեռք բերված քարտ է, որի միջոցով նվերի
+                    հասցեատերը կարող է ընտրել սեփական նվերը՝ Ձեր կողմից փոխանցված քարտի միջոցով
+                </p>
+                <a href="#" class="home-btn">Իմանալ ավելին</a>
+            </div>
+            <div class="banner-slider">
+                @if (Slider != null)
+                {
+                    <div class="slick-carousel" banner-slider>
+
+                        @foreach (var item in Slider)
+                        {
+                            <div>
+                                <a href="@item.Url" class="banner-slider__list">
+                                    <img src="@item.ImageUrl" class="contain" alt="img" />
+                                </a>
+                            </div>
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+    <!-- ====================== -HTML5-BANNER-END- ======================== -->
+    <!-- =================== -HTML5-TOP-SALES-START- ====================== -->
+    <section class="top-sales section-block">
+
+        @if (TopSalesProducts != null && TopSalesProducts.Count() > 0)
+        {
+            <div class="container">
+                <div class="section-block__list">
+                    <h2 class="section-block__list--title">Տոպ վաճառքներ</h2>
+                    <div class="slick-carousel" product-slider>
+
+                        @foreach (var product in TopSalesProducts)
+                        {
+                            <div>
+                                <div class="section-block__list--slide card">
+                                    <a href="/product/@product.ProductSeoLink" class="card-link">
+                                        <div class="card-link__img">
+                                            <img src="@product.ProductImage.ImageUrl" alt="card">
+                                        </div>
+                                        <div class="card-link__info">
+                                            <h3 class="card-link__info--name">@product.Name</h3>
+                                            <p class="card-link__info--price">
+                                                @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Min(), product.CurrencyValue) -
+                                                @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Max(), product.CurrencyValue)
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <button class="icon icon-heart @(CheckFavoritStatus(product)) card-icon d-f a-i-c j-c-c" disabled="@FavoritButtonIsDisabled"
+                                            @onclick="(() => CreateOrRemoveFavorite(product))"></button>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="d-f j-c-c a-i-c">
+                    <a href="/products/top-sales" class="home-btn d-f a-i-c j-c-c">Տեսնել բոլորը</a>
+                </div>
+
+            </div>
+        }
+    </section>
+    <!-- ==================== -HTML5-TOP-SALES-END- ======================= -->
+    <!-- ================= -HTML5-TOP-CATEGORY-START- ===================== -->
+    <section class="section-block">
+        @if (NewArrivalsProducts != null && NewArrivalsProducts.Count() > 0)
+        {
+            <div class="container">
+                <h2 class="section-block__list--title">Նորույթ</h2>
+                <div class="section-block__list--slide">
+                    <div class="slick-carousel" category-slider>
+                        @foreach (var product in NewArrivalsProducts)
+                        {
+                            <div>
+                                <a href="/product/@product.ProductSeoLink" class="card-link">
+                                    <img src="@product.ProductImage.ImageUrl" alt="category">
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+    </section>
+    <!-- ================== -HTML5-TOP-CATEGORY-END- ====================== -->
+    <!-- =================== -HTML5-TOP-SALES-START- ====================== -->
+    <section class="top-sales  section-block">
+        <div class="container">
+            <div class="section-block__list">
+                @if (BestSalesProducts != null && BestSalesProducts.Count() > 0)
+                {
+                    <h2 class="section-block__list--title">Լավագույն վաճառք</h2>
+                    <div class="slick-carousel" product-slider>
+                        @foreach (var product in BestSalesProducts)
+                        {
+                            <div>
+                                <div class="section-block__list--slide card">
+                                    <a href="/product/@product.ProductSeoLink" class="card-link">
+                                        <div class="card-link__img">
+                                            <img src="@product.ProductImage.ImageUrl" alt="card">
+                                        </div>
+                                        <div class="card-link__info">
+                                            <h3 class="card-link__info--name">@product.Name</h3>
+                                            <p class="card-link__info--price">
+                                                @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Min(), product.CurrencyValue) -
+                                                @GetCultureInfoPriceString(product.Offers.Select(o => o.Price).Max(), product.CurrencyValue)
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <button class="icon icon-heart @(CheckFavoritStatus(product)) card-icon d-f a-i-c j-c-c" disabled="@FavoritButtonIsDisabled"
+                                            @onclick="(() => CreateOrRemoveFavorite(product))"></button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+            </div>
+            <div class="d-f j-c-c a-i-c">
+                <a href="/products/best-sales" class="home-btn d-f a-i-c j-c-c">Տեսնել բոլորը</a>
+            </div>
+        </div>
+    </section>
+    <!-- ==================== -HTML5-TOP-SALES-END- ======================= -->
+    <!-- ================== -HTML5-ADVANTAGES-START- ====================== -->
+    <section class="advantages">
+        <div class="container">
+            <div class="section-block">
+                <h2 class="section-block__list--title"> Մեր առավելությունները</h2>
+                <div class="advantages-block">
+                    <div class="advantages-block__list d-g g-g-32 g-t-c-2 a-i-c">
+                        <div class="advantages-block__list--info d-f j-c-c">
+                            <div class="advantages-block__list--info-img">
+                                <img src="../assets/img/home/sections/illustration.png" class="contain"
+                                     alt="advantages">
+                            </div>
+                        </div>
+                        <div class="advantages-block__list--info">
+                            <div class="advantages-block__list--info-text">
+                                <h4 class="advantages-block__list--info-text__title">
+                                    Դուք երբեք չեք սխալվի նվեր ընտրելիս
+                                </h4>
+                                <p class="advantages-block__list--info-text__main">
+                                    Եթե դժվարանում եք նվեր ընտրելու հարցում,
+                                    nvercard.am տալիս է ձեզ հիանալի հնարավորություն ընտրելու
+                                    ժամանակակից, յուրօրինակ նվեր, այսպիսով վերջնական նվերի ընտրության հնարավորությունը
+                                    փոխանցելով
+                                    քարտապանին
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="advantages-block__list advantages-block__reverse d-g g-g-32 g-t-c-2 a-i-c">
+                        <div class="advantages-block__list--info">
+                            <div class="advantages-block__list--info-text">
+                                <h4 class="advantages-block__list--info-text__title">Հասանելի է ամենուր</h4>
+                                <p class="advantages-block__list--info-text__main">
+                                    nvercard.am-ը հասանելի է ամենուր և ամեն ժամ:
+                                    Ձեռք
+                                    բերեք նորաոճ նվեր մի քանի րոպեի ընթացքում
+                                </p>
+                            </div>
+                        </div>
+                        <div class="advantages-block__list--info d-f j-c-c">
+                            <div class="advantages-block__list--info-img">
+                                <img src="../assets/img/home/sections/anywhere.png" class="contain" alt="advantages">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="advantages-block__list d-g g-g-32 g-t-c-2 a-i-c">
+                        <div class="advantages-block__list--info d-f j-c-c">
+                            <div class="advantages-block__list--info-img">
+                                <img src="../assets/img/home/sections/advantages1.png" class="contain" alt="advantages">
+                            </div>
+                        </div>
+                        <div class="advantages-block__list--info">
+                            <div class="advantages-block__list--info-text">
+                                <h4 class="advantages-block__list--info-text__title">Մշտապես թարմացվող տեսականի</h4>
+                                <p class="advantages-block__list--info-text__main">
+                                    nvercard.am-ի ողջ տեսականին անընդհատ
+                                    թարմացվում
+                                    է,
+                                    տալով մեր գնորդին քարտեր և նվերներ ընտրելու ճկուն համակարգ ու հնարավորություն
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="advantages-block__list advantages-block__reverse d-g g-g-32 g-t-c-2 a-i-c">
+                        <div class="advantages-block__list--info">
+                            <div class="advantages-block__list--info-text">
+                                <h4 class="advantages-block__list--info-text__title">Պարզ և հարմարավետ կայք</h4>
+                                <p class="advantages-block__list--info-text__main">
+                                    Ընտրիր ցանկալի նվեր քարտը, ընդամենը
+                                    մուտքագրելով
+                                    հեռախոսահամարդ մուտք գործիր համակարգ, «Հաստատել պատվերի» կոճակի միջոցով հաստատիր
+                                    նվեր քարտի
+                                    ընտրությունը, վճարիր և ստացիր նվեր քարտիդ վկայականը
+                                </p>
+                            </div>
+                        </div>
+                        <div class="advantages-block__list--info d-f j-c-c">
+                            <div class="advantages-block__list--info-img">
+                                <img src="../assets/img/home/sections/advantages2.png" class="contain" alt="advantages">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="advantages-block__list d-g g-g-32 g-t-c-2 a-i-c">
+                        <div class="advantages-block__list--info d-f j-c-c">
+                            <div class="advantages-block__list--info-img">
+                                <img src="../assets/img/home/sections/advantages3.png" class="contain" alt="advantages">
+                            </div>
+                        </div>
+                        <div class="advantages-block__list--info">
+                            <div class="advantages-block__list--info-text">
+                                <h4 class="advantages-block__list--info-text__title">Օնլայն առաքում</h4>
+                                <p class="advantages-block__list--info-text__main">
+                                    Օնլայն առաքում - առաջինը Հայաստանում: Ստացեք
+                                    Ձեր
+                                    պատվերը կայքի անձնական գրասենյակ բաժնում կամ նշված mail-ին վայրկյանների ընթացքում:
+                                    Ազատվիր
+                                    նվեր
+                                    քարտի ստացման հասցեին վերաբերող դաշտերից, ստացիր նվեր քարտը օնլայն առաքմամբ
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="advantages-block__list advantages-block__reverse d-g g-g-32 g-t-c-2 a-i-c">
+                        <div class="advantages-block__list--info">
+                            <div class="advantages-block__list--info-text">
+                                <h4 class="advantages-block__list--info-text__title">Ունիվերսալ նվեր քարտ</h4>
+                                <p class="advantages-block__list--info-text__main">
+                                    Ունիվերսալ նվեր քարտը Ձեր ճիշտ որոշումն է:
+                                    Այն
+                                    հնարավորություն է տալիս քարտապանին ընտրել իր ցանկալի նվերը առանց որևէ դժվարության՝
+                                    ունենալով
+                                    լայն
+                                    ընտրության հնարավորություն
+                                </p>
+                            </div>
+                        </div>
+                        <div class="advantages-block__list--info d-f j-c-c">
+                            <div class="advantages-block__list--info-img">
+                                <img src="../assets/img/home/sections/advantages4.png" class="contain" alt="advantages">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =================== -HTML5-ADVANTAGES-END- ======================= -->
+    <!-- ==================== -HTML5-ORDER-START- ========================= -->
+    <section class="order section-block">
+        <div class="container">
+            <div class="order-block">
+                <h2 class="section-block__list--title">
+                    Ինչպե՞ս պատվիրել
+                </h2>
+                <div class="order-block__list">
+                    <div class="order-block__list--info d-g g-g-32 g-t-c-4">
+                        <div class="order-block__list--info-form">
+                            <div class="order-block__list--info-form__img">
+                                <img src="../assets/img/home/sections/choice.png" class="contain" alt="order">
+                            </div>
+                            <span class="order-block__list--info-form__title">Ընտրել նվեր քարտը</span>
+                            <p class="order-block__list--info-form__main">Ընտրեք քարտատեսակը և սեղմեք "Գնել" կոճակը</p>
+                        </div>
+                        <div class="order-block__list--info-form">
+                            <div class="order-block__list--info-form__img">
+                                <img src="../assets/img/home/sections/shoice.png" class="contain" alt="order">
+                            </div>
+                            <span class="order-block__list--info-form__title">Մուտք գործել</span>
+                            <p class="order-block__list--info-form__main">
+                                Սեղմեք "մուտք գրոծել" կոճակը, հավաքեք Ձեր
+                                հեռախոսահամարը
+                                և ստացեք հաստատման կոդ
+                            </p>
+                        </div>
+                        <div class="order-block__list--info-form">
+                            <div class="order-block__list--info-form__img">
+                                <img src="../assets/img/home/sections/order.png" class="contain" alt="order">
+                            </div>
+                            <span class="order-block__list--info-form__title">Պատվիրել</span>
+                            <p class="order-block__list--info-form__main">
+                                Լրացրեք անհրաժեշտ բոլոր դաշտերը և հաստատեք Ձեր
+                                ընտրությունը
+                            </p>
+                        </div>
+                        <div class="order-block__list--info-form">
+                            <div class="order-block__list--info-form__img">
+                                <img src="../assets/img/home/sections/downlaod.png" class="contain" alt="order">
+                            </div>
+                            <span class="order-block__list--info-form__title">Ներբեռնել</span>
+                            <p class="order-block__list--info-form__main">
+                                Ներբեռնեք օնլայն քարտը կամ վկայագիրը և փոխանցեք
+                                քարտապանին
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-f j-c-c a-i-c">
+                        <a href="#" class="home-btn d-f a-i-c j-c-c">Ընտրել նվեր քարտ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===================== -HTML5-ORDER-END- ========================== -->
+</main>

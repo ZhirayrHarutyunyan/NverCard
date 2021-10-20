@@ -1,0 +1,305 @@
+@page "/checkout"
+@using NverCard.Public.Client.ServiceProxies.Dictionaries
+<Title Value="Checkout"></Title>
+@if (!ConfirmOrder)
+{
+    <section class="checkout container">
+        <div class="checkout-block d-f">
+            @if (ShopingCartItems != null && ShopingCartItems.Count > 0)
+            {
+                <div class="checkout-block__details">
+                    <div class="checkout-block__details--info">
+                        <h4 class="checkout-block__details--info-title">Առաքում</h4>
+                        <div class="checkout-block__details--info-types">
+                            <div class="checkout-block__details--info-types__list d-f j-c-b">
+                                <div class="checkout-block__details--info-types__list--order d-f">
+                                    <label class="checked d-f a-i-c">
+                                        <input type="radio" class="radio" name="deliveryTypeCheckBox" checked="@GetDeliveryType(true)" @onclick="(() => ChangeDeliveryType(true))">
+                                        <span class="checked-radio"></span>
+                                        <p class="checkout-block__details--info-types__list--order-text">Կատարել առաքում</p>
+                                        <i class="icon icon-helper tooltip">
+                                            <span class="tooltip-text">
+                                                հաստատելու համար օպերատորը կկապնվի նշված հեռախոսահամարով
+                                            </span>
+                                        </i>
+                                    </label>
+                                </div>
+                                <div class="checkout-block__details--info-types__list--order d-f">
+                                    <label class="checked d-f a-i-c">
+                                        <input type="radio" class="radio" name="deliveryTypeCheckBox" checked="@GetDeliveryType(false)" @onclick="(() => ChangeDeliveryType(false))">
+                                        <span class="checked-radio"></span>
+                                        <p class="checkout-block__details--info-types__list--order-text">Ուղարկել Էլ. հասցեին</p>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="checkout-block__details--info-types__present">
+                                <label class="checked basket-block__list--item-left__checked d-f a-i-c">
+                                    <input type="checkbox" class="checkbox" @onchange="(() => SendAsChange())">
+                                    <span class="checked-checkbox"></span>
+                                    <p class="checkout-block__details--info-types__present--text">Ուղարկել որպես նվեր</p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    @if (!WithDelivery)
+                    {
+                        <div class="checkout-block__details--info">
+                            <div class="checkout-block__details--info-main">
+                                <div class="checkout-block__details--info-main__inputs">
+                                    <h6 class="checkout-block__details--info-main__inputs--title">Էլ. հասցե</h6>
+                                    <input type="text" class="checkout-block__details--info-main__inputs--forall" autocomplete="off"
+                                           placeholder="inf@nvercard.am" @bind-value="Email">
+                                </div>
+                                @*<div class="checkout-block__details--info-main__inputs">
+                                        <h6 class="checkout-block__details--info-main__inputs--title">Հեռախոսահամար</h6>
+                                        <input type="number" class="checkout-block__details--info-main__inputs--forall"
+                                               autocomplete="off" placeholder="(_ _) _ _ - _ _ - _ _ ">
+                                    </div>*@
+                                <div class="checkout-block__details--info-main__inputs">
+                                    <h6 class="checkout-block__details--info-main__inputs--title">Նշումներ (ըստ ցանկության)</h6>
+                                    <textarea id="textarea" cols="30" rows="10" placeholder="Նշումներ"
+                                              class="checkout-block__details--info-main__inputs--textarea" @bind="@Description"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                    <div class="checkout-block__details--info">
+                        @if (WithDelivery)
+                        {
+                            <div class="checkout-block__details--info-main">
+                                <h5 class="checkout-block__details--info-main__title">Առաքման հասցե</h5>
+                                <div class="dropdown dropdown-border">
+                                    <h6 class="dropdown-border__title">Քաղաք</h6>
+                                    <button class="dropdown-select click-expand dropdown-border__select d-f a-i-c j-c-b"
+                                            window-click="" data-expand="false">
+                                        <span class="dropdown-select__selected dropdown-border__select--selected">Երևան</span>
+                                        <i class="icon icon-arrow_down dropdown-border__select--arrow"></i>
+                                    </button>
+                                    <ul class="dropdown-list expand-block d-none">
+                                        <li class="dropdown-list__item active">Երևան</li>
+                                        <li class="dropdown-list__item">Վանաձոր</li>
+                                    </ul>
+                                </div>
+                                <div class="checkout-block__details--info-main__inputs">
+                                    <h6 class="checkout-block__details--info-main__inputs--title">Հասցե</h6>
+                                    <input type="text" class="checkout-block__details--info-main__inputs--forall" autocomplete="off"
+                                           placeholder="Փողոց, շենք, բնակարան" @bind-value="Address">
+                                </div>
+                                <div class="checkout-block__details--info-main__inputs">
+                                    <h6 class="checkout-block__details--info-main__inputs--title">Հեռախոսահամար</h6>
+                                    <input type="number" @bind-value="PhoneNumber" class="checkout-block__details--info-main__inputs--forall"
+                                           autocomplete="off" placeholder="(_ _) _ _ - _ _ - _ _ ">
+                                </div>
+                                <div class="checkout-block__details--info-main__inputs">
+                                    <h6 class="checkout-block__details--info-main__inputs--title">Նշումներ (ըստ ցանկության)</h6>
+                                    <textarea id="textarea" cols="30" rows="10" placeholder="Նշումներ"
+                                              class="checkout-block__details--info-main__inputs--textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="checkout-block__details--info-main">
+                                <h5 class="checkout-block__details--info-main__title">Առաքման օր</h5>
+                                    <DatePicker Class="checkout-block__details--info-main__inputs cursor-pointer" Placeholder="@(CurrentDateTime.Hour > 16 ? CurrentDateTime.AddDays(1).ToShortDateString() : CurrentDateTime.ToShortDateString())" Id="checkoutDeliveryDatePicker" SelectedDate="SelectedDateTime" MinDate="CurrentDateTime" SelectedDateChanged="SelectedDateChanged"></DatePicker>
+                                    <p class="checkout-block__details--info-main__text">
+                                        Առաքումը կկատարվի
+                                        @if (!SelectedDateTime.HasValue)
+                                        {
+                                            @(CurrentDateTime.Hour > 16 ? CurrentDateTime.AddDays(1).ToShortDateString() : CurrentDateTime.ToShortDateString() )
+                                        }
+                                        else
+                                        {
+                                            @(SelectedDateTime.Value.ToShortDateString() )
+                                        }
+                                        ժամը 09:00 - 19:00
+                                    </p>
+                            </div>
+                        }
+
+                        @if (SendAsGift)
+                        {
+                            <h4 class="checkout-block__details--info-title">Հասցեատեր (Ոչ պարտադիր)</h4>
+                            <div class="checkout-block__details--info-main__inputs">
+                                <h6 class="checkout-block__details--info-main__inputs--title">Ստացողի անունը</h6>
+                                <input type="text" class="checkout-block__details--info-main__inputs--forall" autocomplete="off" @bind="GiftReceivingName"
+                                       placeholder="Ստացողի անունը">
+                            </div>
+                            <div class="checkout-block__details--info-main__inputs">
+                                <h6 class="checkout-block__details--info-main__inputs--title">Նամակ</h6>
+                                <textarea name="" id="" cols="30" rows="10" placeholder="Շնորհավորում եմ ..."
+                                          class="checkout-block__details--info-main__inputs--textarea" @bind="Congratulation"></textarea>
+                            </div>
+                            @if (!WithDelivery)
+                            {
+                                <div class="checkout-block__details--info-main">
+                                    <h5 class="checkout-block__details--info-main__title">
+                                        Ուղարկման օր/ժամ
+                                        @* <i class="icon icon-helper tooltip">
+                                            <span class="tooltip-text">
+                                                Եթե նշված չէ, օրն ու ժամը համարվում է ընթացիք.
+                                            </span>
+                                        </i> *@
+                                    </h5>
+                                    <DatePicker Class="checkout-block__details--info-main__inputs cursor-pointer" Placeholder="Եթե նշված չէ օրն ու ժամը, համարվում է ընթացիք" Id="checkoutDeliveryEmailDatePicker" SelectedDate="SelectedDateTime" MinDate="CurrentDateTime" SelectedDateChanged="SelectedDateChanged"></DatePicker>
+                                </div>
+                            }
+                        }
+                        @if (WithDelivery)
+                        {
+                            <h4 class="checkout-block__details--info-title">Ընտրել ծրարը</h4>
+                            <p class="checkout-block__details--info-text d-none-xs">Դարձրեք nvercard-ն ավելի յուրօրինակ/գեղեցիկ</p>
+                            <div class="checkout-block__details--info-img d-f j-c-b a-i-c">
+                                <div class="checkout-block__details--info-img__slide">
+                                    <div class="checkout-block__details--info-img__slide--small d-g g-t-c-4-w g-g-32">
+                                        <button class="checkout-block__details--info-img__slide--small-envelope @(SelectedEnvelope == EnvelopeOne ? "active" : "")" @onclick="@(() =>SelectEnvelope(EnvelopeOne))">
+                                            <img src="../assets/img/checkout/@(EnvelopeOne).jpg">
+                                        </button>
+                                        <button class="checkout-block__details--info-img__slide--small-envelope @(SelectedEnvelope == EnvelopeTwo ? "active" : "")" @onclick="@(() =>SelectEnvelope(EnvelopeTwo))">
+                                            <img src="../assets/img/checkout/@(EnvelopeTwo).jpg">
+                                        </button>
+                                        <button class="checkout-block__details--info-img__slide--small-envelope @(SelectedEnvelope == EnvelopeThree ? "active" : "")" @onclick="@(() =>SelectEnvelope(EnvelopeThree))">
+                                            <img src="../assets/img/checkout/@(EnvelopeThree).jpg">
+                                        </button>
+                                        <button class="checkout-block__details--info-img__slide--small-envelope @(SelectedEnvelope == EnvelopeFour ? "active" : "")" @onclick="@(() =>SelectEnvelope(EnvelopeFour))">
+                                            <img src="../assets/img/checkout/@(EnvelopeFour).jpg">
+                                        </button>
+                                    </div>
+                                    <div class="checkout-block__details--info-img__slide--big">
+                                        <img src="../assets/img/checkout/@(SelectedEnvelope).jpg">
+                                    </div>
+                                </div>
+                                <div class="checkout-block__details--info-img__form">
+                                    <img src="../assets/img/checkout/document.jpg" alt="offers">
+                                    <p class="checkout-block__details--info-img__form--text">Վկայականի ձևանմուշ</p>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                    <div class="checkout-block__details--info">
+                        <h4 class="checkout-block__details--info-title">Վճարման եղանակ</h4>
+                        <div class="checkout-block__details--info-types">
+                            <div class="checkout-block__details--info-types__list d-f">
+                                <div class="checkout-block__details--info-types__list--order d-f">
+                                    <label class="checked d-f a-i-c">
+                                        <input type="radio" class="radio" name="paymentTypeCheckBox" checked="@CheckPaymentType(PaymentType.Card)" @onclick="@(()=>ChangePaymentType(PaymentType.Card))">
+                                        <span class="checked-radio"></span>
+                                        <p class="checkout-block__details--info-types__list--order-text">Քարտով</p>
+                                    </label>
+                                </div>
+                                <div class="checkout-block__details--info-types__list--order d-f">
+                                    <label class="checked d-f a-i-c">
+                                        <input type="radio" class="radio" name="paymentTypeCheckBox" checked="@CheckPaymentType(PaymentType.Balance)" @onclick="@(()=>ChangePaymentType(PaymentType.Balance))">
+                                        <span class="checked-radio"></span>
+                                        <p class="checkout-block__details--info-types__list--order-text">Հաշվեկշիռից</p>
+                                    </label>
+                                </div>
+                                @if (WithDelivery)
+                                {
+                                    <div class="checkout-block__details--info-types__list--order d-f">
+                                        <label class="checked d-f a-i-c">
+                                            <input type="radio" class="radio" name="paymentTypeCheckBox" checked="@CheckPaymentType(PaymentType.Cash)" @onclick="@(()=>ChangePaymentType(PaymentType.Cash))">
+                                            <span class="checked-radio"></span>
+                                            <p class="checkout-block__details--info-types__list--order-text">Կանխիկ</p>
+                                        </label>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        @if (SelectedPaymentType == PaymentType.Card)
+                        {
+                            <p class="checkout-block__details--info-text">
+                                Գնումների գործընթացը շարունակելու համար դուք
+                                կուղղորդվեք ameriabank էջին
+                            </p>
+                        }
+
+                        @if (SelectedPaymentType == PaymentType.Balance)
+                        {
+                            @if (GetCartTotalPrice() > CurrentUser.Balance)
+                            {
+                                <p class="checkout-block__details--info-text">Ձեր հաշվեկշռին չկա բավարար գումար</p>
+                            }
+                            <div class="checkout-block__details--info-account d-f">
+                                <div class="checkout-block__details--info-account__balance">
+                                    @GetCultureInfoPriceString(CurrentUser.Balance.HasValue ? int.Parse(CurrentUser.Balance.Value.ToString()) : 0)
+                                </div>
+                                <div class="checkout-block__details--info-account__add">
+                                    <button class="btn btn-border" @onclick="@(() => NavigateTo("/account-balance"))">
+                                        Համալրել հաշիվը
+                                    </button>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <div class="checkout-block__accept">
+                    <div class="checkout-block__accept--cards">
+                        @foreach (var item in ShopingCartItems)
+                        {
+                            <div class="checkout-block__accept--cards-simple d-f">
+                                <div class="checkout-block__accept--cards-simple__img">
+                                    <img src="@item.ImageUrl" alt="card">
+                                </div>
+                                <div class="checkout-block__accept--cards-simple__info">
+                                    <h4 class="checkout-block__accept--cards-simple__info--title">@item.ProductName </h4>
+                                    <span class="checkout-block__accept--cards-simple__info--text">
+                                        @(item.GiftcardType == GiftCardType.Electronic ? "Էլեկտրոնային" : "Պլաստիկ")
+                                    </span>
+                                    <p class="checkout-block__accept--cards-simple__info--price">@GetCultureInfoAmountString(item.Nominal, item.NominalName)   @(item.Quantity > 1 ? $"x {item.Quantity}" : "")</p>
+                                    <div class="checkout-block__accept--cards-simple__info--total">@GetCultureInfoPriceString(item.Price * item.Quantity)</div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                    <div class="checkout-block__accept--costs">
+                        <div class="checkout-block__accept--costs-single d-f j-c-b">
+                            <p class="checkout-block__accept--costs-single__text">Առաքում</p>
+                            <p class="checkout-block__accept--costs-single__text">@(WithDelivery ? GetCultureInfoPriceString(DeliveryPrice) : GetCultureInfoPriceString(0))</p>
+                        </div>
+                        <div class="checkout-block__accept--costs-single d-f j-c-b">
+                            <p class="checkout-block__accept--costs-single__text">Ծրար</p>
+                            <p class="checkout-block__accept--costs-single__text">@((SelectedEnvelope != EnvelopeOne && SelectedEnvelope != null )? GetCultureInfoPriceString(EnvelopePrice) : GetCultureInfoPriceString(0))</p>
+                        </div>
+                    </div>
+                    <div class="checkout-block__accept--total">
+                        <div class="d-f j-c-b">
+                            <p class="checkout-block__accept--total-text">Ընդհանուր (@ShopingCartItems.Count)</p>
+                            <p class="checkout-block__accept--total-text">@GetCultureInfoPriceString(GetCartTotalPrice())</p>
+                        </div>
+                        <button disabled="@ContinueButtonDisabled()"
+                                class="btn btn-background checkout-block__accept--total-btn d-f a-i-c j-c-c" @onclick="(() => CreateOrder())">
+                            Հաստատել
+                            @if (ButtonLoading)
+                            {
+                                <i class="icon icon-loop"></i>
+                            }
+                        </button>
+                    </div>
+                </div>
+            }
+            else if (ShopingCartItems != null && ShopingCartItems.Count == 0)
+            {
+                <section class="empty">
+                    <div class="empty-block d-f j-c-c a-i-c f-d-c">
+                        <div class="empty-block__img">
+                            <img src="../assets/img/empty/empty_basket.png" alt="empty">
+                        </div>
+                        <h4 class="empty-block__title">Զամբյուղը դատարկ է</h4>
+                        <div class="empty-block__button">
+                            <a href="#" class="btn button btn-background empty-block__button--btn">Կատարել գնում</a>
+                        </div>
+                    </div>
+                </section>
+            }
+        </div>
+    </section>
+
+}
+
+<NverCard.Public.Client.Pages.Thanks.Thanks @ref="thanks" />

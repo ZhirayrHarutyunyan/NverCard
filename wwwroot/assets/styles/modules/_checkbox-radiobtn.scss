@@ -1,0 +1,54 @@
+.checked {
+    cursor: pointer;
+    height: 18px;
+
+    &-checkbox {
+        @include wh(18px);
+        border: solid 2px #999999;
+        border-radius: var(--border-radius);
+        position: relative;
+        opacity: 1;
+    }
+
+    .checkbox:checked~&-checkbox {
+        border: solid 2px var(--primary_color_default-0DB02B);
+        background-color: var(--primary_color_default-0DB02B);
+
+        &::before {
+            content: "";
+            @include wh(6px, 12px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border: solid var(--neutral_color_white);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    }
+
+
+    &-radio {
+        min-width: 16px;
+        min-height: 16px;
+        border: solid 2px #3C444B;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .radio:checked~&-radio {
+        border: solid 1px var(--primary_color_default-0DB02B);
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            border-radius: 50%;
+            background-color: var(--primary_color_default-0DB02B);
+        }
+    }
+}

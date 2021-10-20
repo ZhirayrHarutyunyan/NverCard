@@ -1,0 +1,93 @@
+@page "/account-order"
+
+@using NverCard.Public.Client.Shared.Account_Menu
+@using ServiceProxies.Dictionaries
+
+<Title Value="Իմ պատվերները"></Title>
+
+<AuthorizeView>
+    <Authorized>
+        <section class="account">
+            <div class="container d-f d-block-sm">
+                <div class="account-menu">
+                    <AccountMenu IsAccountOrders="true" />
+                </div>
+                <div class="account-block animate_show_up">
+                    <div class="account-block__title d-f">
+                        <h4 class="account-block__title--text account-block__title--active">
+                            Պատվերներ (2)
+                        </h4>
+                    </div>
+                    <div class="orders-mobile d-none d-block-xs">
+                        <table class="order-mobile__table">
+                            @if (CustomerOrders != null)
+                            {
+                                @foreach (var order in CustomerOrders)
+                                {
+                                    <tr class='orders-mobile__table--list @(@order.Status != OrderStatus.Assembled ? "disabled" : "")'>
+                                        <td class="orders-mobile__table--list-info">
+                                            <p class="orders-mobile__table--list-info__regular">@order.OrderRequestDateTime</p>
+                                            <span class="orders-mobile__table--list-info__regular">N @order.Number</span>
+                                        </td>
+                                        <td class="orders-mobile__table--list-info">
+                                            <p class="orders-mobile__table--list-info__regular">@order.CertificatesCount</p>
+                                        </td>
+                                        <td class="orders-mobile__table--list-info">
+                                            <p class="orders-mobile__table--list-info__regular">@order.OrderStatusName</p>
+                                            <span class="orders-mobile__table--list-info__bold">@order.TotalPrice ֏</span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                    <div class="block-orders scrollbar d-none-xs">
+                        <table class="block-orders__table">
+                            <tr class="block-orders__table--title">
+                                <th class="block-orders__table--title-single">Ամսաթիվ</th>
+                                <th class="block-orders__table--title-single">Պատվերի N</th>
+                                <th class="block-orders__table--title-single">Քարտերի քանակ</th>
+                                <th class="block-orders__table--title-single">Գումար</th>
+                                <th class="block-orders__table--title-single">Կարգավիճակ</th>
+                            </tr>
+                            @if (CustomerOrders != null)
+                            {
+                                @*@foreach (var order in CustomerOrders)
+                                {*@
+                                <Virtualize Items="CustomerOrders.ToList()"  Context="order">
+                                    <tr class='block-orders__table--list @(@order.Status != OrderStatus.Assembled ? "disabled" : "")'>
+                                        <td class="block-orders__table--list-info">@order.OrderRequestDateTime</td>
+                                        <td class="block-orders__table--list-info">N @order.Number</td>
+                                        <td class="block-orders__table--list-info">@order.CertificatesCount</td>
+                                        <td class="block-orders__table--list-info block-orders__table--list-bold">
+                                            @order.TotalPrice ֏
+                                        </td>
+                                        <td class="block-orders__table--list-info">@order.OrderStatusName</td>
+                                    </tr>
+                                    </Virtualize>
+                                //}
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </Authorized>
+    <NotAuthorized>
+        <div class="animate_show_up">
+            <section class="empty">
+                <div class="empty-block d-f j-c-c a-i-c f-d-c">
+                    <div class="empty-block__img">
+                        <img src="./assets/img/empty/empty_wishlist.png" alt="empty">
+                    </div>
+                    <div class="empty-block__button">
+                        <a href="#" class="btn button btn-background empty-block__button--btn">Գլխավոր</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+<Login @ref="modalLogin"></Login>
+

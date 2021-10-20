@@ -1,0 +1,24 @@
+// popular
+[category-slider] {
+   @include sm {
+      margin: 0 -16px;
+   }
+
+   .slick {
+      &-slide {
+         max-width: 298px;
+         min-width: 298px;
+         margin-right: 31px;
+
+         @include lg {
+            max-width: 215px;
+            min-width: 215px;
+            margin-right: 23px;
+         }
+
+         @include sm {
+            margin-right: 15px;
+         }
+      }
+   }
+}

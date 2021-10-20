@@ -1,0 +1,44 @@
+﻿.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 999999999;
+
+    &-open {
+        overflow: hidden;
+    }
+
+    &-dialog {
+        min-height: 100%;
+        padding: 15px;
+        position: relative;
+        pointer-events: none;
+    }
+
+    &-content {
+        pointer-events: auto;
+    }
+
+    &-backdrop {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    &-close {
+        color: #000000;
+        cursor: pointer;
+        position: absolute;
+
+        &:hover {
+            color: var(--secondary_color_dark-940019)
+        }
+    }
+}

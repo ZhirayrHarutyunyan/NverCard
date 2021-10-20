@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   <title>Գլխավոր</title>
+   <base href="/" />
+   <link rel="icon" href="./assets/img/favicon/icon-x32.png">
+   <link rel="stylesheet" href="./css/style.min.css">
+</head>
+
+<body onload="checkBrowser()">
+    <div id="app" class="app d-f f-d-c">
+        <div class="loader"></div>
+    </div>
+
+    <!-- theme color -->
+    <div class="theme" data-theme>
+        <p class="theme-title">Ըտրել կայքի գույնը</p>
+        <button class="theme-color theme-default active" data-switch-color data-color-mode="default" data-active></button>
+        <button class="theme-color theme-dark" data-switch-color data-color-mode="dark" data-active></button>
+        <button class="theme-color theme-light" data-switch-color data-color-mode="light" data-active></button>
+        <button class="theme-btn" data-theme-btn>
+            <img src="https://img.icons8.com/plasticine/50/000000/color-switch.png" />
+        </button>
+    </div>
+
+    <script src="_framework/blazor.webassembly.js" integrity=""></script>
+    <!-- JQuery -->
+    <script src="./assets/js/jquery-3.5.1.min.js"></script>
+    <!-- slick js slider (carousel) -->
+    <script src="./assets/js/slick.min.js"></script>
+    <script src="./assets/js/slick-config.js"></script>
+    <!-- data rangePicker -->
+    <script src="./assets/js/daterangepicker.js"></script>
+    <script src="./assets/js/date.js"></script>
+    <script src="./assets/js/date-picker.js"></script>
+    <!-- js for blazor -->
+    <script src="./assets/js/phone-mask.js"></script>
+    <script src="./assets/js/theme-color.js"></script>
+    <script src="./assets/js/navbar.js"></script>
+    <script src="./assets/js/range-filter.js"></script>
+    <!-- check browser -->
+    <script src="./assets/js/check-browser.js"></script>
+    <!-- main js -->
+    <script src="./assets/js/scripts.js"></script>
+    <script src="./assets/js/downloader.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+.icon-heart {
+   @include wh(32px);
+   min-width: 32px;
+   min-height: 32px;
+   color: var(--grey_color_default-D3D3D3);
+   transition: var(--transition-all-ease);
+
+   @include sm-min {
+      &:hover {
+         background: rgba(205, 205, 205, 0.1);
+         border-radius: 2px;
+      }
+   }
+
+   &.active {
+      color: var(--secondary_color_default-cd143f);
+   }
+
+   &:active {
+      animation: heart 1s ease;
+   }
+
+   @keyframes heart {
+      0% {
+         transform: scale(.75);
+      }
+
+      20% {
+         transform: scale(1);
+      }
+
+      40% {
+         transform: scale(.75);
+      }
+
+      60% {
+         transform: scale(1);
+      }
+
+      80% {
+         transform: scale(.75);
+      }
+
+      100% {
+         transform: scale(.75);
+      }
+   }
+
+
+   &.disabled {
+      color: var(--grey_color_dark-E6E6E6);
+      pointer-events: none;
+   }
+
+}

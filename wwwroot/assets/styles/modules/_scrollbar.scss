@@ -1,0 +1,19 @@
+.scrollbar {
+   overflow: auto;
+
+   &::-webkit-scrollbar {
+      @include wh(4px);
+   }
+
+   &::-webkit-scrollbar-thumb {
+      background-color: var(--grey_color_default-999999);
+      border-radius: 2px;
+
+   }
+
+   &::-webkit-scrollbar-track {
+      background-color: var(--grey_color_light-F5F5F5);
+      border-radius: 2px;
+
+   }
+}

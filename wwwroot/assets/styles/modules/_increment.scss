@@ -1,0 +1,37 @@
+.increment {
+    width: 98px;
+    height: 40px;
+    user-select: none;
+    border: 1px solid var(--grey_color_default-D3D3D3);
+    border-radius: 4px;
+    padding: 2px;
+
+    @include md {
+        height: 36px;
+    }
+
+    .icon {
+        min-width: 30px;
+        height: 100%;
+        font-size: rem(20px);
+        color: var(--grey_color_default-999999);
+        background-color: var(--grey_color_light-F5F5F5);
+        cursor: pointer;
+        transition: var(--transition-all-ease);
+
+        &:hover {
+            color: var(--neutral_color_black);
+        }
+    }
+
+    &-input {
+        width: calc(100% - 40px);
+        height: 100%;
+        font: rem(15px) $Regular;
+        color: var(--neutral_color_black);
+        text-align: center;
+        padding: 0 1px;
+        text-align: center;
+    }
+
+}

@@ -1,0 +1,92 @@
+@using NverCard.Public.Client.Shared.Navbar
+
+@if (displayModalLogin)
+{
+    <div class="modal">
+        <div class="modal-backdrop" @onclick="CloseModal"></div>
+        <div class="modal-dialog d-f a-i-c j-c-c animate_show_down">
+            <div class="login modal-content">
+                <i class="icon icon-close modal-close" @onclick="CloseModal"></i>
+                <div class="login-modal">
+                    <h2 class="login-modal__title">Մուտք գործել</h2>
+                    <div class="login-modal__content">
+                        <div class="login-modal__content--form">
+                            <p class="login-modal__content--form-title">Հեռախոսահամար</p>
+                            <div class="login-modal__content--form-box">
+                                <span
+                                class='login-modal__content--form-box__number @(IsConfirmMode ? "disabled" : "")'>+374</span>
+                                <input type="tel" name="phone" value="@PhoneNumber" @oninput="@CheckIsValidPhoneNumber"
+                                data-phone-mask
+                                class='login-modal__content--form__input login-modal__content--form-box__input @((PhoneNumberIsValid || string.IsNullOrEmpty(PhoneNumber)) ? "" : "input-error")'
+                                placeholder="(_ _) _ _ - _ _ - _ _ " autocomplete="off" disabled="@IsConfirmMode">
+                                @if (!PhoneNumberIsValid && !string.IsNullOrEmpty(PhoneNumber))
+                                {
+                                    <i class="validation error icon icon-error"></i>
+                                }
+                                else if (PhoneNumberIsValid)
+                                {
+                                    <i class='validation valid icon icon-check @(IsConfirmMode ? "disabled" : "")'></i>
+                                }
+                            </div>
+                            @if (IsConfirmMode)
+                            {
+                                <p class="login-modal__content--form-info">@((ConfirmTimer.Minute -
+                            CurrentDateTime.Minute).ToString("D2")) : @ConfirmTimer.Second.ToString("D2")</p>
+
+                                @if (ConfirmTimerExpired)
+                                {
+                                    <p class="login-modal__content--form-info">
+                                        <a href="javascript:;" class="login-modal__content--form-repeat"
+                                @onclick="@SendPhoneNumber">Ուղարկել կոդը կրկին</a>
+                                    </p>
+                                }
+                            }
+                            <p class="login-modal__content--form-error">@PhoneNumberErrorText</p>
+                        </div>
+                        @if (IsConfirmMode)
+                        {
+                            <div class="login-modal__content--form">
+                                <p class="login-modal__content--form-title">Հաստատման կոդը </p>
+                                <input type="password" name="password" value="@ConfirmCode" maxlength="6" @onkeypress="Enter"
+                            @oninput="@InputConfirmCode"
+                            class="login-modal__content--form-input 
+                                       @((!ConfirmCodeIsValid && ConfirmCode?.Length == 6 || ConfirmCode?.Length > 6) ? " input-error" : "" )"
+                            autocomplete="off" placeholder="_ _ _ _ _ _" disabled="@ConfirmTimerExpired">
+                                @if (!ConfirmCodeIsValid && ConfirmCode?.Length == 6 || ConfirmCode?.Length > 6)
+                                {
+                                    <p class="login-modal__content--form-error">Հաստատման կոդը սխալ է</p>
+                                }
+                            </div>
+                        }
+
+                        <div class="login-modal__content--form-rules d-f a_i_s">
+                            <label class="checked d-f">
+                                <input class="checkbox" type="checkbox" hidden @onchange="(() => TermOfUseChange())">
+                                <i class="checked-checkbox d-f a-i-c j-c-c"></i>
+                            </label>
+                            <p class="login-modal__content--form-rules__text">
+                                Ես համաձայն եմ
+                                <a href="javascript:;" target="_blank" class="login-modal__content--form-rules__text--link">
+                                    Օգտվելու կանոններին
+                                </a> և
+                                <a href="javascript:;" target="_blank" class="login-modal__content--form-rules__text--link">
+                                    Գաղտնիության քաղաքականությանը
+                                </a>
+                            </p>
+                        </div>
+                        <button class="btn btn-background d-f a-i-c j-c-c"
+                        disabled="@(ButtonLoading || !PhoneNumberIsValid || !IsRulesAccepted || ConfirmTimerExpired)"
+                        @onclick="@(IsConfirmMode? ConfirmPhoneNumber : SendPhoneNumber)">
+                            @(IsConfirmMode ? "Հաստատել" : "Ստանալ կոդ")
+
+                            @if (ButtonLoading)
+                            {
+                                <i class="icon icon-loop"></i>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
